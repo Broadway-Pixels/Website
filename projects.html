@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1557d6" />
+    <meta name="description" content="Explore music, creator content, and app projects from Broadway Pixels." />
+    <meta property="og:title" content="Projects | Broadway Pixels" />
+    <meta property="og:description" content="Music releases, original videos, and mobile apps from Broadway Pixels." />
+    <meta property="og:image" content="assets/anything-cover.jpg" />
+    <title>Projects | Broadway Pixels</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand brand-image" href="index.html" aria-label="Broadway Pixels home"><img src="assets/broadway-pixels-logo.webp" alt="Broadway Pixels" width="1500" height="711" /></a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="music.html">Music</a>
+        <a href="index.html#content">Content</a>
+        <a class="active" href="projects.html">Projects</a>
+        <a href="index.html#about">About</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <header class="projects-hero reveal">
+        <h1>One studio. More than one medium.</h1>
+        <p>Music releases, original videos, and apps in development. Every project is another way to turn an idea into an experience.</p>
+      </header>
+
+      <div class="filter-bar" role="group" aria-label="Filter projects">
+        <button class="filter-button active" type="button" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-button" type="button" data-filter="music" aria-pressed="false">Music</button>
+        <button class="filter-button" type="button" data-filter="content" aria-pressed="false">Content</button>
+        <button class="filter-button" type="button" data-filter="apps" aria-pressed="false">Apps</button>
+      </div>
+
+      <section class="work-grid" aria-label="Broadway Pixels projects">
+        <a class="work-card work-card-featured reveal" data-category="music" href="https://open.spotify.com/album/0VL7288O2SPb1Fw9A3n0Ko" target="_blank" rel="noreferrer">
+          <img src="assets/anything-cover.jpg" alt="Anything by Broadway Pixels" width="640" height="640" />
+          <div><p>Music</p><h2>Anything</h2><span>Latest single from Broadway Pixels</span></div>
+        </a>
+        <a class="work-card reveal" data-category="content" href="https://www.youtube.com/watch?v=WQ0nGxqRsdk" target="_blank" rel="noreferrer">
+          <img src="assets/toontown-video.jpg" alt="Toontown Rewritten video thumbnail" width="480" height="360" loading="lazy" />
+          <div><p>Content</p><h2>The Sellbot Task Force</h2><span>Gaming series, Episode 1</span></div>
+        </a>
+        <article id="apps" class="work-card work-card-wide reveal" data-category="apps">
+          <img src="assets/app-worlds.jpg" alt="Broadway Pixels app worlds" width="1568" height="1003" loading="lazy" />
+          <div><p>App development</p><h2>Building the next collection</h2><span>Three mobile products currently taking shape.</span></div>
+        </article>
+        <article id="tanktopia" class="work-card app-project reveal" data-category="apps">
+          <div class="app-crop crop-left"><img src="assets/app-worlds.jpg" alt="Tanktopia aquarium world" width="1568" height="1003" loading="lazy" /></div>
+          <div><p>Mobile game</p><h2>Tanktopia</h2><span>Clean, merge, collect, and decorate a growing aquarium.</span></div>
+        </article>
+        <article id="resellops" class="work-card app-project reveal" data-category="apps">
+          <div class="app-crop crop-center"><img src="assets/app-worlds.jpg" alt="ResellOps barcode scanner world" width="1568" height="1003" loading="lazy" /></div>
+          <div><p>Reseller utility</p><h2>ResellOps</h2><span>Scan a product, estimate the upside, and decide buy or pass.</span></div>
+        </article>
+        <article id="shop-market-deals" class="work-card app-project reveal" data-category="apps">
+          <div class="app-crop crop-right"><img src="assets/app-worlds.jpg" alt="Shop Market Deals storefront world" width="1568" height="1003" loading="lazy" /></div>
+          <div><p>Shopping app</p><h2>Shop Market Deals</h2><span>A mobile storefront built for faster discovery and checkout.</span></div>
+        </article>
+      </section>
+
+      <p class="empty-state" hidden>No projects match this view yet.</p>
+
+      <section class="contact-section reveal">
+        <div><h2>Have a track, video, or app idea?</h2><p>Tell Broadway Pixels what you want to make.</p></div>
+        <a class="button button-light" href="mailto:Media@BroadwayPixels.com?subject=Creative%20project">Get in touch</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand brand-image" href="index.html"><img src="assets/broadway-pixels-logo.webp" alt="Broadway Pixels" width="1500" height="711" loading="lazy" /></a>
+      <p>Music, content, and apps from one independent studio.</p>
+      <div><a href="https://www.instagram.com/BroadwayPixels" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/user/FlapTheEntertainer" target="_blank" rel="noreferrer">YouTube</a><a href="https://soundcloud.com/broadwaypixels" target="_blank" rel="noreferrer">SoundCloud</a><a href="mailto:Media@BroadwayPixels.com">Email</a></div>
+      <p class="copyright">© <span data-year></span> Broadway Pixels</p>
+    </footer>
+  </body>
+</html>

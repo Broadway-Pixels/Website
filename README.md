@@ -26,6 +26,7 @@ Then open `http://localhost:8080`.
 - `assets/anything-cover.jpg`: Spotify artwork for the latest release, Anything
 - `assets/youtube-*.jpg`: current Broadway Pixels YouTube thumbnails
 - `assets/vidioza-dancing-fruit.jpg`: Vidioza product media used on Home and Projects
+- `assets/kixkan-project.jpg`: editorial project artwork for KixKan
 - `assets/app-worlds.jpg`: optimized app-development artwork
 - `assets/app-worlds.png`: original generated Broadway Pixels illustration
 

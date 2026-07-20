@@ -17,6 +17,7 @@ test("validates a complete project support request", () => {
   const result = validateSupportSubmission(validSubmission);
   assert.equal(result.ok, true);
   assert.equal(result.submission.email, "river@example.com");
+  assert.equal(validateSupportSubmission({ ...validSubmission, project: "KixKan" }).ok, true);
 });
 
 test("rejects unknown projects and short messages", () => {

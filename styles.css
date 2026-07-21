@@ -176,6 +176,9 @@
   .site-footer { width: var(--container); margin-inline: auto; padding-block: 38px; display: grid; grid-template-columns: 1.2fr 1fr auto; align-items: center; gap: 24px; border-top: 1px solid var(--line); color: var(--muted); }
   .site-footer > div { display: flex; flex-wrap: wrap; gap: 12px 20px; }
   .site-footer a:not(.brand) { font-weight: 700; text-underline-offset: 4px; }
+  .site-footer .social-handle { display: grid; gap: 2px; text-decoration: none; }
+  .site-footer .social-handle span { text-decoration: underline; text-underline-offset: 4px; }
+  .site-footer .social-handle small { color: var(--muted); font-size: .74rem; font-weight: 650; }
   .copyright { grid-column: 1 / -1; font-size: 0.9rem; }
 
   .projects-hero { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding-block: clamp(80px, 12vw, 150px) 60px; }
@@ -206,6 +209,8 @@
   .content-hero { width: var(--container); margin-inline: auto; padding-block: clamp(80px, 11vw, 140px) 70px; display: flex; align-items: end; justify-content: space-between; gap: 40px; border-bottom: 1px solid var(--line); }
   .content-hero h1 { max-width: 10ch; font-size: clamp(3.4rem, 7vw, 6.8rem); }
   .content-hero div > p:last-child { max-width: 48ch; margin-top: 22px; color: var(--muted); font-size: 1.18rem; }
+  .content-hero-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; max-width: 510px; }
+  .content-hero-actions .button-secondary { margin-top: 0; }
   .video-release-section, .shorts-section, .social-video-section { width: var(--container); margin-inline: auto; padding-block: clamp(75px, 10vw, 130px); }
   .shorts-section, .social-video-section { border-top: 1px solid var(--line); }
   .content-section-heading { max-width: 680px; margin-bottom: 42px; }
@@ -305,6 +310,7 @@
     .project-preview, .project-preview-wide { grid-column: auto; grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
     .project-preview-wide figure { aspect-ratio: 1.4; }
     .content-hero { align-items: flex-start; flex-direction: column; }
+    .content-hero-actions { justify-content: flex-start; }
     .video-release-feature { grid-template-columns: 1fr; }
     .shorts-grid { grid-template-columns: 1fr; }
     .social-video-grid { grid-template-columns: 1fr; }

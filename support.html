@@ -4,17 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#1557d6" />
-    <meta name="description" content="Get support for Vidioza, Tanktopia, ResellOps, Shop Market Deals, music, and Broadway Pixels content." />
+    <meta name="description" content="Contact Broadway Pixels for project support, music and content inquiries, partnerships, press, and general questions." />
     <meta property="og:title" content="Support | Broadway Pixels" />
-    <meta property="og:description" content="Send a support request for a Broadway Pixels project." />
+    <meta property="og:description" content="Get help or start a conversation with Broadway Pixels." />
     <meta property="og:image" content="assets/app-worlds.jpg" />
     <title>Support | Broadway Pixels</title>
     <link rel="preload" as="image" href="assets/app-worlds.jpg" />
-    <link rel="stylesheet" href="styles.css" />
-    <script src="script.js" defer></script>
-    <script src="support.js" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260720-2" />
+    <script src="script.js?v=20260720-2" defer></script>
+    <script src="support.js?v=20260720-2" defer></script>
   </head>
-  <body>
+  <body class="support-page">
     <a class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <a class="brand brand-image" href="index.html" aria-label="Broadway Pixels home"><img src="assets/broadway-pixels-logo.webp" alt="Broadway Pixels" width="1500" height="711" /></a>
@@ -25,7 +25,6 @@
         <a href="index.html#content">Content</a>
         <a href="projects.html">Projects</a>
         <a href="index.html#about">About</a>
-        <a href="contact.html">Contact</a>
         <a class="active" href="support.html">Support</a>
       </nav>
     </header>
@@ -33,9 +32,9 @@
     <main id="main">
       <section class="support-hero">
         <div class="support-hero-copy reveal">
-          <p class="hero-kicker">Project support</p>
+          <p class="hero-kicker">Support and inquiries</p>
           <h1>How can we help?</h1>
-          <p>Choose the project, share the details, and Broadway Pixels will follow up by email.</p>
+          <p>Get help with a project or start a conversation with Broadway Pixels.</p>
         </div>
         <figure class="support-hero-art reveal">
           <img src="assets/app-worlds.jpg" alt="Illustrated Broadway Pixels project worlds" width="1568" height="1003" />
@@ -45,8 +44,8 @@
       <section class="support-layout" aria-labelledby="support-form-title">
         <div class="support-form-wrap reveal">
           <div class="support-form-heading">
-            <h2 id="support-form-title">Send a support request</h2>
-            <p>Fields marked required help route your request to the right project.</p>
+            <h2 id="support-form-title">Tell us what you need</h2>
+            <p>Use this form for app support, music, content, partnerships, press, or a general question.</p>
           </div>
           <form id="support-form" class="support-form" action="mailto:Media@BroadwayPixels.com" method="post" enctype="text/plain">
             <div class="form-grid">
@@ -60,9 +59,10 @@
                 <small id="email-help">We will only use this to reply to your request.</small>
               </div>
               <div class="form-field">
-                <label for="support-project">Project</label>
+                <label for="support-project">Project or area</label>
                 <select id="support-project" name="project" required>
-                  <option value="">Choose a project</option>
+                  <option value="">Choose one</option>
+                  <option>General question</option>
                   <option>Vidioza</option>
                   <option>Tanktopia</option>
                   <option>KixKan</option>
@@ -71,18 +71,17 @@
                   <option>Music and releases</option>
                   <option>Content and YouTube</option>
                   <option>Broadway Pixels website</option>
-                  <option>General question</option>
                 </select>
               </div>
               <div class="form-field">
-                <label for="support-topic">What is this about?</label>
-                <input id="support-topic" name="topic" type="text" minlength="2" maxlength="120" placeholder="Example: export will not finish" required />
+                <label for="support-topic">Subject</label>
+                <input id="support-topic" name="topic" type="text" minlength="2" maxlength="120" placeholder="A short summary" required />
               </div>
             </div>
             <div class="form-field">
-              <label for="support-message">What happened?</label>
+              <label for="support-message">How can we help?</label>
               <textarea id="support-message" name="message" rows="7" minlength="20" maxlength="5000" aria-describedby="message-help" required></textarea>
-              <small id="message-help">Include what you expected, what happened instead, and any error message you saw.</small>
+              <small id="message-help">For a technical issue, include what you expected, what happened, and any error message.</small>
             </div>
             <div class="form-field">
               <label for="support-link">Helpful link <span>(optional)</span></label>
@@ -94,8 +93,8 @@
             </div>
             <input id="support-request-id" name="requestId" type="hidden" />
             <div class="support-submit-row">
-              <button class="button button-primary" type="submit">Send request</button>
-              <p>Requests go to <a href="mailto:Media@BroadwayPixels.com">Media@BroadwayPixels.com</a>.</p>
+              <button class="button button-primary" type="submit">Send message</button>
+              <p>Messages go to <a href="mailto:Media@BroadwayPixels.com">Media@BroadwayPixels.com</a>.</p>
             </div>
             <p id="support-status" class="form-status" role="status" aria-live="polite"></p>
           </form>
@@ -103,18 +102,18 @@
         </div>
 
         <aside class="support-aside reveal" aria-labelledby="before-send-title">
-          <h2 id="before-send-title">A useful request includes:</h2>
+          <h2 id="before-send-title">Help us reply faster</h2>
           <div class="support-note">
-            <strong>The project</strong>
-            <p>Tell us which app, release, video, or website page needs help.</p>
+            <strong>Choose the right area</strong>
+            <p>Select the app, music, content, website, or general question option.</p>
           </div>
           <div class="support-note">
-            <strong>What you were doing</strong>
-            <p>Share the action that led to the issue and whether it happens every time.</p>
+            <strong>Share useful context</strong>
+            <p>Explain the idea or issue and tell us what you would like to happen next.</p>
           </div>
           <div class="support-note">
-            <strong>Device details</strong>
-            <p>Include your phone, computer, browser, or app version when it matters.</p>
+            <strong>Add details when relevant</strong>
+            <p>For technical help, include your device, browser, app version, and a helpful link.</p>
           </div>
           <div class="support-email-block">
             <p>Prefer email?</p>
@@ -127,7 +126,7 @@
     <footer class="site-footer">
       <a class="brand brand-image" href="index.html"><img src="assets/broadway-pixels-logo.webp" alt="Broadway Pixels" width="1500" height="711" loading="lazy" /></a>
       <p>Music, content, and apps from one independent studio.</p>
-      <div><a href="https://www.instagram.com/BroadwayPixels" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@BroadwayPixels" target="_blank" rel="noreferrer">YouTube</a><a href="contact.html">Contact</a><a href="support.html">Support</a></div>
+      <div><a href="https://www.instagram.com/BroadwayPixels" target="_blank" rel="noreferrer">Instagram</a><a href="https://www.youtube.com/@BroadwayPixels" target="_blank" rel="noreferrer">YouTube</a><a href="support.html">Support</a></div>
       <p class="copyright">© <span data-year></span> Broadway Pixels</p>
     </footer>
   </body>

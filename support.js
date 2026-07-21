@@ -27,7 +27,7 @@ supportForm?.addEventListener("submit", async (event) => {
   submitButton.disabled = true;
   submitButton.textContent = "Sending...";
   supportStatus.className = "form-status form-status-pending";
-  supportStatus.textContent = "Sending your request securely.";
+  supportStatus.textContent = "Sending your message securely.";
 
   try {
     const response = await fetch("/api/support", {
@@ -37,10 +37,10 @@ supportForm?.addEventListener("submit", async (event) => {
     });
     const result = await response.json().catch(() => ({}));
 
-    if (!response.ok) throw new Error(result.message || "Your request could not be sent.");
+    if (!response.ok) throw new Error(result.message || "Your message could not be sent.");
 
     supportStatus.className = "form-status form-status-success";
-    supportStatus.textContent = "Your request was sent. Broadway Pixels will reply by email.";
+    supportStatus.textContent = "Your message was sent. Broadway Pixels will reply by email.";
     supportForm.reset();
     if (requestIdInput) requestIdInput.value = newRequestId();
   } catch (error) {
@@ -52,6 +52,6 @@ supportForm?.addEventListener("submit", async (event) => {
     console.error(error);
   } finally {
     submitButton.disabled = false;
-    submitButton.textContent = "Send request";
+    submitButton.textContent = "Send message";
   }
 });

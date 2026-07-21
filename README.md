@@ -21,7 +21,7 @@ Then open `http://localhost:8080`.
 - `support.js`: support form submission and UI states
 - `server.mjs`: dependency-free static server and Resend support endpoint for a droplet
 - `api/support.js`: serverless support endpoint for Vercel-compatible hosting
-- `assets/broadway-pixels-logo.webp`: current Broadway Pixels logo from the live Squarespace site
+- `assets/broadway-pixels-logo-v2.png`: transparent Broadway Pixels wordmark based on the supplied retro arcade logo direction
 - `assets/artist-hero.webp` and `assets/artist-portrait.webp`: current artist photography from the live site
 - `assets/anything-cover.jpg`: Spotify artwork for the latest release, Anything
 - `assets/youtube-*.jpg`: current Broadway Pixels YouTube thumbnails

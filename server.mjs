@@ -2,6 +2,7 @@ import { createReadStream, existsSync } from "node:fs";
 import { createServer } from "node:http";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
+import { resolvePublicRequest } from "./lib/routes.mjs";
 import { isAllowedOrigin, sendSupportEmail, validateSupportSubmission } from "./lib/support.mjs";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
@@ -68,7 +69,13 @@ createServer(async (request, response) => {
   if (url.pathname === "/api/support") return handleSupport(request, response);
   if (!["GET", "HEAD"].includes(request.method)) return json(response, 405, { message: "Method not allowed." });
 
-  const requested = url.pathname === "/" ? "/index.html" : url.pathname;
+  const route = resolvePublicRequest(url.pathname);
+  if (route.type === "redirect") {
+    response.writeHead(308, { Location: `${route.location}${url.search}`, "Cache-Control": "public, max-age=3600" });
+    return response.end();
+  }
+
+  const requested = route.file;
   if (!publicFiles.has(requested) && !requested.startsWith("/assets/")) {
     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
     return response.end("Not found");

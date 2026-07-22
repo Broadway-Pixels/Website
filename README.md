@@ -12,17 +12,18 @@ Then open `http://localhost:8080`.
 
 ## Pages
 
-- `index.html`: focused studio introduction and latest work
-- `music.html`: year-grouped releases with direct Spotify and verified SoundCloud links
-- `content.html`: YouTube video releases and Shorts
-- `projects.html`: apps, games, and software projects
-- `support.html`: single form for project support, collaborations, press, and general questions
+- `/`: focused studio introduction and latest work
+- `/music`: year-grouped releases with direct Spotify and verified SoundCloud links
+- `/videos`: YouTube video releases, Shorts, Reels, and TikToks
+- `/projects`: apps, games, and software projects
+- `/support`: single form for project support, collaborations, press, and general questions
+- The server maps these clean URLs to the static HTML templates and redirects legacy `.html` links.
 - `styles.css`: complete responsive design system
 - `script.js`: mobile navigation, scroll reveals, and current year
 - `support.js`: support form submission and UI states
 - `server.mjs`: dependency-free static server and Resend support endpoint for a droplet
 - `api/support.js`: serverless support endpoint for Vercel-compatible hosting
-- `assets/broadway-pixels-logo-v2.png`: transparent Broadway Pixels wordmark based on the supplied retro arcade logo direction
+- `assets/broadway-pixels-logo-v2.png`: transparent Broadway Pixels wordmark used in the header, footer, and browser favicon
 - `assets/artist-hero.webp` and `assets/artist-portrait.webp`: current artist photography from the live site
 - `assets/anything-cover.jpg`: Spotify artwork for the latest release, Anything
 - `assets/youtube-*.jpg`: current Broadway Pixels YouTube thumbnails
@@ -41,7 +42,7 @@ The support form needs a server endpoint, so run `server.mjs` behind Nginx inste
 
 ## Resend setup
 
-1. Add and verify a sending subdomain such as `mail.broadwaypixels.com` in Resend.
+1. Add and verify `broadwaypixels.com` in Resend.
 2. Create a sending-only API key restricted to that domain.
 3. Set `RESEND_API_KEY`, `SUPPORT_FROM_EMAIL`, `SUPPORT_TO_EMAIL`, and `ALLOWED_ORIGINS` from `.env.example` in the hosting environment.
 4. Run `npm test`, then start the site with `npm start`.

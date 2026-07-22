@@ -4,6 +4,12 @@ import test from "node:test";
 
 const publicPages = ["index.html", "music.html", "content.html", "projects.html", "support.html"];
 
+test("homepage uses the Broadway Pixels creator and developer SEO title", async () => {
+  const homepage = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  assert.match(homepage, /<title>Broadway Pixels - Content Creator and Developer<\/title>/);
+  assert.match(homepage, /property="og:title" content="Broadway Pixels - Content Creator and Developer"/);
+});
+
 test("every public page loads the early theme and offers a theme control", async () => {
   const pages = await Promise.all(publicPages.map((file) => readFile(new URL(`../${file}`, import.meta.url), "utf8")));
   pages.forEach((page) => {
@@ -25,4 +31,3 @@ test("visible site copy contains no em or en dashes", async () => {
   const pages = await Promise.all(files.map((file) => readFile(new URL(`../${file}`, import.meta.url), "utf8")));
   pages.forEach((page) => assert.doesNotMatch(page, /[—–]/));
 });
-

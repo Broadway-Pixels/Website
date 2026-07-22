@@ -207,10 +207,10 @@
   .project-preview figure { overflow: hidden; aspect-ratio: 16 / 9; background: var(--blue-soft); }
   .project-preview figure img { width: 100%; height: 100%; object-fit: cover; transition: scale 600ms cubic-bezier(.16, 1, .3, 1); }
   .project-preview:hover figure img { scale: 1.02; }
-  .project-preview-copy { align-self: end; padding: clamp(24px, 2.2vw, 36px); }
+  .project-preview-copy { align-self: stretch; display: grid; grid-template-rows: auto 1fr auto; align-content: start; padding: clamp(24px, 2.2vw, 36px); }
   .project-preview-copy h2 { margin-block: 0 14px; font-size: clamp(2rem, 3vw, 3.5rem); }
   .project-preview-copy > span { display: block; max-width: 42ch; color: var(--muted); }
-  .project-preview-copy strong { display: block; margin-top: 24px; color: var(--blue-dark); }
+  .project-preview-copy strong { display: block; align-self: end; margin-top: 24px; color: var(--blue-dark); }
   .project-preview-game figure { min-height: 0; }
   .tanktopia-art { position: relative; isolation: isolate; }
   .project-preview .tanktopia-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }

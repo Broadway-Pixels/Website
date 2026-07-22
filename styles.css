@@ -120,6 +120,7 @@
   .lane-apps img { object-position: center 44%; }
 
   .music-page-hero { width: var(--container); margin-inline: auto; padding-block: clamp(70px, 10vw, 130px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr); align-items: center; gap: clamp(48px, 9vw, 130px); }
+  .music-page-hero h1 { font-size: clamp(3rem, 5.5vw, 5.6rem); }
   .music-page-hero > div > p { max-width: 50ch; margin-block: 22px 30px; color: var(--muted); font-size: 1.12rem; }
   .platform-actions { display: flex; flex-wrap: wrap; gap: 12px; }
   .platform-actions .button-secondary { margin-top: 0; }

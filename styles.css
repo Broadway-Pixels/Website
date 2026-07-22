@@ -176,8 +176,9 @@
   .site-footer .social-icon:hover img { filter: brightness(0) invert(1); }
   .copyright { grid-column: 1 / -1; font-size: 0.9rem; }
 
-  .projects-hero { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding-block: clamp(80px, 12vw, 150px) 60px; }
-  .projects-hero p { max-width: 54ch; margin-top: 24px; color: var(--muted); font-size: clamp(1.08rem, 2vw, 1.3rem); }
+  .projects-hero { width: var(--container); margin-inline: auto; padding-block: clamp(64px, 8vw, 108px) 56px; border-bottom: 1px solid var(--line); }
+  .projects-hero h1 { max-width: 10ch; font-size: clamp(3.3rem, 6vw, 5.8rem); }
+  .projects-hero > p:last-child { max-width: 48ch; margin-top: 22px; color: var(--muted); font-size: 1.18rem; }
   .project-showcase { width: var(--container); margin-inline: auto; padding-block: 24px clamp(90px, 11vw, 150px); display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 20px; }
   .project-preview { overflow: hidden; display: grid; grid-template-rows: auto 1fr; background: var(--sky); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; }
   .project-preview-wide { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.5fr); grid-template-rows: none; }

@@ -1,0 +1,22 @@
+[Unit]
+Description=Broadway Pixels website
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/broadwaypixels
+Environment=NODE_ENV=production
+Environment=PORT=8080
+ExecStart=/usr/bin/node /var/www/broadwaypixels/server.mjs
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadOnlyPaths=/var/www/broadwaypixels
+
+[Install]
+WantedBy=multi-user.target

@@ -201,17 +201,17 @@
   .projects-hero { width: var(--container); margin-inline: auto; padding-block: clamp(64px, 8vw, 108px) 56px; border-bottom: 1px solid var(--line); }
   .projects-hero h1 { max-width: 10ch; font-size: clamp(3.3rem, 6vw, 5.8rem); }
   .projects-hero > p:last-child { max-width: 48ch; margin-top: 22px; color: var(--muted); font-size: 1.18rem; }
-  .project-showcase { width: var(--container); margin-inline: auto; padding-block: 24px clamp(90px, 11vw, 150px); display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 20px; }
+  .project-showcase { width: var(--container); margin-inline: auto; padding-block: 24px clamp(90px, 11vw, 150px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
   .project-preview { overflow: hidden; display: grid; grid-template-rows: auto 1fr; background: var(--sky); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; }
-  .project-preview-wide { grid-column: 1 / -1; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.5fr); grid-template-rows: none; }
-  .project-preview figure { overflow: hidden; background: var(--blue-soft); }
+  .project-preview-wide { grid-column: auto; }
+  .project-preview figure { overflow: hidden; aspect-ratio: 16 / 9; background: var(--blue-soft); }
   .project-preview figure img { width: 100%; height: 100%; object-fit: cover; transition: scale 600ms cubic-bezier(.16, 1, .3, 1); }
   .project-preview:hover figure img { scale: 1.02; }
-  .project-preview-copy { align-self: end; padding: clamp(26px, 4vw, 48px); }
-  .project-preview-copy h2 { margin-block: 0 16px; font-size: clamp(2.2rem, 4.5vw, 4.8rem); }
+  .project-preview-copy { align-self: end; padding: clamp(24px, 2.2vw, 36px); }
+  .project-preview-copy h2 { margin-block: 0 14px; font-size: clamp(2rem, 3vw, 3.5rem); }
   .project-preview-copy > span { display: block; max-width: 42ch; color: var(--muted); }
   .project-preview-copy strong { display: block; margin-top: 24px; color: var(--blue-dark); }
-  .project-preview-game figure { min-height: 600px; }
+  .project-preview-game figure { min-height: 0; }
   .tanktopia-art { position: relative; isolation: isolate; }
   .project-preview .tanktopia-background { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
   .project-preview .tanktopia-logo { position: absolute; inset: 50% auto auto 50%; z-index: 1; width: min(78%, 540px); height: auto; object-fit: contain; filter: drop-shadow(0 12px 20px rgb(10 55 100 / .24)); transform: translate(-50%, -50%); }
@@ -391,7 +391,7 @@
     .support-aside { position: static; }
     .project-showcase { grid-template-columns: 1fr; }
     .project-preview, .project-preview-wide { grid-column: auto; grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
-    .project-preview-wide figure { aspect-ratio: 1.4; }
+    .project-preview-wide figure { aspect-ratio: 16 / 9; }
     .project-preview-game figure { min-height: 0; aspect-ratio: 16 / 9; }
     .content-hero { align-items: flex-start; flex-direction: column; }
     .content-hero-actions { justify-content: flex-start; }

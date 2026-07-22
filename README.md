@@ -29,6 +29,7 @@ Then open `http://localhost:8080`.
 - `assets/youtube-*.jpg`: current Broadway Pixels YouTube thumbnails
 - `assets/vidioza-app-preview.png`: current Vidioza product website preview
 - `assets/tanktopia-background.png` and `assets/tanktopia-logo.png`: Tanktopia project art and wordmark
+- `assets/kixkan-preview.jpg`: branded KixKan Linux project preview
 - `assets/app-worlds.jpg`: optimized app-development artwork
 - `assets/app-worlds.png`: original generated Broadway Pixels illustration
 

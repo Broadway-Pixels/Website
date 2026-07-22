@@ -103,8 +103,8 @@
   .section { width: var(--container); margin-inline: auto; padding-block: clamp(80px, 10vw, 140px); }
   .section-heading { max-width: 760px; margin-bottom: 48px; }
   .section-heading p { max-width: 52ch; margin-top: 18px; color: var(--muted); font-size: 1.1rem; }
-  .music-page-hero { width: var(--container); margin-inline: auto; padding-block: clamp(70px, 10vw, 130px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr); align-items: center; gap: clamp(48px, 9vw, 130px); }
-  .music-page-hero h1 { font-size: clamp(2.1rem, 5vw, 5rem); white-space: nowrap; }
+  .music-page-hero { width: var(--container); margin-inline: auto; padding-block: clamp(70px, 10vw, 130px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr); align-items: center; gap: clamp(48px, 9vw, 130px); border-bottom: 1px solid var(--line); }
+  .music-page-hero h1 { font-size: clamp(3.3rem, 6vw, 5.8rem); }
   .platform-actions { display: flex; flex-wrap: wrap; gap: 12px; }
   .music-page-hero .platform-actions { margin-top: 30px; }
   .platform-actions .button-secondary { margin-top: 0; }
@@ -322,7 +322,6 @@
 
   @media (width <= 640px) {
     h1 { font-size: clamp(3rem, 15vw, 4.75rem); }
-    .music-page-hero h1 { font-size: clamp(2.1rem, 10.5vw, 2.6rem); }
     .hero-actions { align-items: flex-start; flex-direction: column; }
     .hero-art { aspect-ratio: 1; }
     .brand-image img { block-size: 38px; }

@@ -179,9 +179,13 @@
   .site-footer { width: var(--container); margin-inline: auto; padding-block: 38px; display: grid; grid-template-columns: 1.2fr 1fr auto; align-items: center; gap: 24px; border-top: 1px solid var(--line); color: var(--muted); }
   .site-footer > div { display: flex; flex-wrap: wrap; gap: 12px 20px; }
   .site-footer a:not(.brand) { font-weight: 700; text-underline-offset: 4px; }
-  .site-footer .social-handle { display: grid; gap: 2px; text-decoration: none; }
-  .site-footer .social-handle span { text-decoration: underline; text-underline-offset: 4px; }
-  .site-footer .social-handle small { color: var(--muted); font-size: .74rem; font-weight: 650; }
+  .site-footer .footer-links { align-items: center; justify-content: flex-end; gap: 14px; }
+  .footer-socials { display: flex; align-items: center; gap: 8px; }
+  .site-footer .social-icon { display: grid; place-items: center; inline-size: 42px; block-size: 42px; border: 1px solid var(--line); border-radius: 9px; background: var(--sky); text-decoration: none; transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease; }
+  .site-footer .social-icon img { inline-size: 21px; block-size: 21px; }
+  .site-footer .social-icon:hover { border-color: var(--blue); background: var(--blue); transform: translateY(-2px); }
+  .site-footer .social-icon:hover img { filter: brightness(0) invert(1); }
+  .site-footer .footer-support { padding: 9px 4px; color: var(--blue-dark); }
   .copyright { grid-column: 1 / -1; font-size: 0.9rem; }
 
   .projects-hero { width: min(980px, calc(100% - 40px)); margin: 0 auto; padding-block: clamp(80px, 12vw, 150px) 60px; }
@@ -352,7 +356,7 @@
     .contact-section { align-items: flex-start; flex-direction: column; }
     .contact-section .button { width: 100%; }
     .site-footer { grid-template-columns: 1fr; }
-    .site-footer > div { justify-content: flex-start; }
+    .site-footer .footer-links { justify-content: flex-start; }
     .copyright { grid-column: auto; }
     .form-grid { grid-template-columns: 1fr; }
     .support-submit-row { align-items: stretch; flex-direction: column; }

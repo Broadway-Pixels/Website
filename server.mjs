@@ -15,6 +15,7 @@ const mimeTypes = {
   ".js": "text/javascript; charset=utf-8",
   ".jpg": "image/jpeg",
   ".png": "image/png",
+  ".svg": "image/svg+xml",
   ".webp": "image/webp",
 };
 const publicFiles = new Set(["/index.html", "/music.html", "/content.html", "/projects.html", "/support.html", "/styles.css", "/script.js", "/support.js"]);

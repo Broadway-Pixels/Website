@@ -1,5 +1,10 @@
 document.documentElement.classList.add("js");
 
+document.querySelectorAll("[data-theme-toggle]").forEach((button) => {
+  button.addEventListener("click", () => window.BroadwayPixelsTheme?.cycleTheme());
+});
+window.BroadwayPixelsTheme?.applyTheme();
+
 const menuButton = document.querySelector(".menu-button");
 const nav = document.querySelector(".site-nav");
 
@@ -37,3 +42,53 @@ if (reduceMotion || !("IntersectionObserver" in window)) {
 
   revealItems.forEach((item) => observer.observe(item));
 }
+
+function anonymousSessionId() {
+  const key = "bp-analytics-session";
+  try {
+    let value = sessionStorage.getItem(key);
+    if (!value) {
+      value = crypto.randomUUID();
+      sessionStorage.setItem(key, value);
+    }
+    return value;
+  } catch {
+    return "";
+  }
+}
+
+function trafficSource() {
+  if (!document.referrer) return "direct";
+  try {
+    const referrer = new URL(document.referrer);
+    return referrer.hostname === window.location.hostname ? "internal" : referrer.hostname.toLowerCase();
+  } catch {
+    return "direct";
+  }
+}
+
+function deviceClass() {
+  if (window.innerWidth < 700) return "mobile";
+  if (window.innerWidth < 1024) return "tablet";
+  return "desktop";
+}
+
+function recordPageView() {
+  const trackedPages = new Set(["/", "/music", "/videos", "/projects", "/support"]);
+  if (!trackedPages.has(window.location.pathname)) return;
+  if (!["broadwaypixels.com", "www.broadwaypixels.com"].includes(window.location.hostname)) return;
+  if (navigator.doNotTrack === "1") return;
+  const sessionId = anonymousSessionId();
+  if (!sessionId) return;
+
+  fetch("/api/analytics/view", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ path: window.location.pathname, sessionId, source: trafficSource(), device: deviceClass() }),
+    keepalive: true,
+  }).catch(() => {
+    // Analytics never interrupts the visitor experience.
+  });
+}
+
+recordPageView();

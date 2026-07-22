@@ -18,6 +18,7 @@ PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=true
 ReadOnlyPaths=/var/www/broadwaypixels
+ReadWritePaths=/var/lib/broadway-pixels
 
 [Install]
 WantedBy=multi-user.target

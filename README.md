@@ -1,6 +1,6 @@
 # Broadway Pixels website concept
 
-Broadway Pixels website, positioning the studio as a music producer, content creator, and app developer. The site includes a project-aware support form backed by Resend.
+Broadway Pixels website, positioning the studio as a music producer, content creator, and app developer. The site includes a project-aware support form backed by Resend, automatic time-based light and dark themes, and private first-party analytics.
 
 ## Preview locally
 
@@ -17,11 +17,14 @@ Then open `http://localhost:8080`.
 - `/videos`: YouTube video releases, Shorts, Reels, and TikToks
 - `/projects`: apps, games, and software projects
 - `/support`: single form for project support, collaborations, press, and general questions
+- `/dashboard`: private traffic dashboard for page views, sessions, sources, devices, and recent activity
 - The server maps these clean URLs to the static HTML templates and redirects legacy `.html` links.
 - `styles.css`: complete responsive design system
-- `script.js`: mobile navigation, scroll reveals, and current year
+- `theme.js`: early time-based theme selection with light, dark, and automatic visitor controls
+- `script.js`: mobile navigation, scroll reveals, current year, and privacy-preserving page-view collection
+- `dashboard.js`: authenticated analytics dashboard rendering
 - `support.js`: support form submission and UI states
-- `server.mjs`: dependency-free static server and Resend support endpoint for a droplet
+- `server.mjs`: dependency-free static server with Resend support, first-party analytics, and dashboard endpoints
 - `api/support.js`: serverless support endpoint for Vercel-compatible hosting
 - `assets/broadway-pixels-logo-v2.png`: transparent Broadway Pixels wordmark used in the header, footer, and browser favicon
 - `assets/artist-hero.webp` and `assets/artist-portrait.webp`: current artist photography from the live site
@@ -39,7 +42,16 @@ Use the design as a visual blueprint in Squarespace 7.1. Create Home, Projects, 
 
 ## Droplet path
 
-The support form needs a server endpoint, so run `server.mjs` behind Nginx instead of serving the folder directly. Copy `.env.example` to a protected environment file, add the Resend values, run the Node process with systemd, and proxy Nginx to `127.0.0.1:8080`. Add HTTPS with Certbot.
+The support form and dashboard need server endpoints, so run `server.mjs` behind Nginx instead of serving the folder directly. Copy `.env.example` to a protected environment file, add the Resend and dashboard values, create `/var/lib/broadway-pixels` owned by the service user, run the Node process with systemd, and proxy Nginx to `127.0.0.1:8080`. Add HTTPS with Certbot.
+
+## Theme and analytics
+
+- Automatic mode uses each visitor's local time: light from 7:00 AM through 6:59 PM and dark from 7:00 PM through 6:59 AM.
+- The header control cycles between automatic, light, and dark. Manual choices remain in local browser storage.
+- Public analytics store the page path, referrer hostname, device class, UTC timestamp, and an anonymous tab-session ID.
+- Analytics do not retain visitor IP addresses, names, email addresses, complete referrer URLs, or dashboard visits.
+- Browsers with Do Not Track enabled are not recorded.
+- Dashboard sessions use signed, secure, HttpOnly cookies and expire after 12 hours.
 
 ## Resend setup
 

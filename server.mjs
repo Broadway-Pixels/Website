@@ -2,14 +2,25 @@ import { createReadStream, existsSync } from "node:fs";
 import { createServer } from "node:http";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
+import { AnalyticsStore, validatePageView } from "./lib/analytics.mjs";
+import {
+  clearDashboardSessionCookie,
+  createDashboardSession,
+  dashboardConfigured,
+  dashboardSessionCookie,
+  readDashboardSession,
+  verifyDashboardCredentials,
+  verifyDashboardSession,
+} from "./lib/dashboard-auth.mjs";
 import { resolvePublicRequest } from "./lib/routes.mjs";
 import { isAllowedOrigin, sendSupportEmail, validateSupportSubmission } from "./lib/support.mjs";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
 const port = Number(process.env.PORT || 8080);
-const attempts = new Map();
-const windowMs = 10 * 60 * 1000;
-const maxAttempts = 5;
+const supportAttempts = new Map();
+const analyticsAttempts = new Map();
+const loginAttempts = new Map();
+const analyticsStore = new AnalyticsStore(process.env.ANALYTICS_DATA_DIR || join(root, "data", "analytics"));
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",
   ".html": "text/html; charset=utf-8",
@@ -19,14 +30,18 @@ const mimeTypes = {
   ".svg": "image/svg+xml",
   ".webp": "image/webp",
 };
-const publicFiles = new Set(["/index.html", "/music.html", "/content.html", "/projects.html", "/support.html", "/styles.css", "/script.js", "/support.js"]);
+const publicFiles = new Set(["/index.html", "/music.html", "/content.html", "/projects.html", "/support.html", "/dashboard.html", "/styles.css", "/script.js", "/theme.js", "/support.js", "/dashboard.js"]);
 
-function json(response, status, body) {
-  response.writeHead(status, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store" });
+function json(response, status, body, headers = {}) {
+  response.writeHead(status, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...headers });
   response.end(JSON.stringify(body));
 }
 
-function isRateLimited(ip) {
+function clientAddress(request) {
+  return String(request.headers["x-real-ip"] || request.socket.remoteAddress || "unknown").slice(0, 64);
+}
+
+function isRateLimited(attempts, ip, maxAttempts, windowMs) {
   if (attempts.size > 10_000) attempts.clear();
   const now = Date.now();
   const recent = (attempts.get(ip) || []).filter((timestamp) => now - timestamp < windowMs);
@@ -48,7 +63,7 @@ async function handleSupport(request, response) {
   if (request.method !== "POST") return json(response, 405, { message: "Method not allowed." });
   if (!String(request.headers["content-type"] || "").startsWith("application/json")) return json(response, 415, { message: "Content type must be application/json." });
   if (!isAllowedOrigin(request.headers, process.env.ALLOWED_ORIGINS)) return json(response, 403, { message: "Request origin is not allowed." });
-  if (isRateLimited(request.socket.remoteAddress || "unknown")) return json(response, 429, { message: "Too many requests. Try again in a few minutes." });
+  if (isRateLimited(supportAttempts, clientAddress(request), 5, 10 * 60 * 1000)) return json(response, 429, { message: "Too many requests. Try again in a few minutes." });
 
   try {
     const validation = validateSupportSubmission(await readJson(request));
@@ -64,9 +79,83 @@ async function handleSupport(request, response) {
   }
 }
 
+async function handleAnalytics(request, response) {
+  if (request.method !== "POST") return json(response, 405, { message: "Method not allowed." });
+  if (!String(request.headers["content-type"] || "").startsWith("application/json")) return json(response, 415, { message: "Content type must be application/json." });
+  if (!isAllowedOrigin(request.headers, process.env.ALLOWED_ORIGINS)) return json(response, 403, { message: "Request origin is not allowed." });
+  if (isRateLimited(analyticsAttempts, clientAddress(request), 200, 10 * 60 * 1000)) return json(response, 429, { message: "Too many requests." });
+
+  let validation;
+  try {
+    validation = validatePageView(await readJson(request));
+  } catch {
+    return json(response, 400, { message: "Request body must be valid JSON." });
+  }
+  if (!validation.ok) return json(response, 422, { message: validation.message });
+  try {
+    await analyticsStore.record(validation.event);
+    return json(response, 202, { recorded: true });
+  } catch (error) {
+    console.error("Analytics recording failed", error);
+    return json(response, 500, { message: "Analytics are temporarily unavailable." });
+  }
+}
+
+function dashboardAuthorized(request) {
+  const token = readDashboardSession(request.headers.cookie);
+  return verifyDashboardSession(token, process.env);
+}
+
+async function handleDashboardLogin(request, response) {
+  if (request.method !== "POST") return json(response, 405, { message: "Method not allowed." });
+  if (!String(request.headers["content-type"] || "").startsWith("application/json")) return json(response, 415, { message: "Content type must be application/json." });
+  if (!isAllowedOrigin(request.headers, process.env.ALLOWED_ORIGINS)) return json(response, 403, { message: "Request origin is not allowed." });
+  if (!dashboardConfigured(process.env)) return json(response, 503, { message: "Dashboard access is not configured." });
+  if (isRateLimited(loginAttempts, clientAddress(request), 10, 15 * 60 * 1000)) return json(response, 429, { message: "Too many sign-in attempts. Try again later." });
+
+  try {
+    const credentials = await readJson(request);
+    if (!verifyDashboardCredentials(credentials, process.env)) return json(response, 401, { message: "Username or password is incorrect." });
+    const secure = request.headers["x-forwarded-proto"] === "https";
+    const session = createDashboardSession(process.env);
+    return json(response, 200, { authenticated: true }, { "Set-Cookie": dashboardSessionCookie(session, secure) });
+  } catch {
+    return json(response, 400, { message: "Request body must be valid JSON." });
+  }
+}
+
+async function handleDashboardStats(request, response, url) {
+  if (request.method !== "GET") return json(response, 405, { message: "Method not allowed." });
+  if (!dashboardAuthorized(request)) return json(response, 401, { message: "Sign in to view website stats." });
+  try {
+    const days = Math.min(90, Math.max(1, Number(url.searchParams.get("days")) || 30));
+    return json(response, 200, await analyticsStore.stats(days));
+  } catch (error) {
+    console.error("Dashboard stats failed", error);
+    return json(response, 500, { message: "Stats are temporarily unavailable." });
+  }
+}
+
+function handleDashboardLogout(request, response) {
+  if (request.method !== "POST") return json(response, 405, { message: "Method not allowed." });
+  if (!isAllowedOrigin(request.headers, process.env.ALLOWED_ORIGINS)) return json(response, 403, { message: "Request origin is not allowed." });
+  const secure = request.headers["x-forwarded-proto"] === "https";
+  return json(response, 200, { authenticated: false }, { "Set-Cookie": clearDashboardSessionCookie(secure) });
+}
+
+function handleDashboardSession(request, response) {
+  if (request.method !== "GET") return json(response, 405, { message: "Method not allowed." });
+  return json(response, 200, { authenticated: dashboardAuthorized(request) });
+}
+
 createServer(async (request, response) => {
   const url = new URL(request.url, `http://${request.headers.host || "localhost"}`);
   if (url.pathname === "/api/support") return handleSupport(request, response);
+  if (url.pathname === "/api/analytics/view") return handleAnalytics(request, response);
+  if (url.pathname === "/api/dashboard/login") return handleDashboardLogin(request, response);
+  if (url.pathname === "/api/dashboard/stats") return handleDashboardStats(request, response, url);
+  if (url.pathname === "/api/dashboard/logout") return handleDashboardLogout(request, response);
+  if (url.pathname === "/api/dashboard/session") return handleDashboardSession(request, response);
   if (!["GET", "HEAD"].includes(request.method)) return json(response, 405, { message: "Method not allowed." });
 
   const route = resolvePublicRequest(url.pathname);
@@ -86,14 +175,19 @@ createServer(async (request, response) => {
     return response.end("Not found");
   }
 
-  response.writeHead(200, {
+  const responseHeaders = {
     "Content-Type": mimeTypes[extname(filePath)] || "application/octet-stream",
     "Content-Security-Policy": "default-src 'self'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "strict-origin-when-cross-origin",
-  });
+  };
+  if (requested === "/dashboard.html") {
+    responseHeaders["Cache-Control"] = "no-store";
+    responseHeaders["X-Robots-Tag"] = "noindex, nofollow";
+  }
+  response.writeHead(200, responseHeaders);
   if (request.method === "HEAD") return response.end();
   createReadStream(filePath).pipe(response);
 }).listen(port, "127.0.0.1", () => {

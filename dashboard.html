@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1557d6" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Website Dashboard | Broadway Pixels</title>
+    <link rel="icon" type="image/png" href="/assets/broadway-pixels-logo-v2.png" />
+    <script src="/theme.js?v=20260722-1"></script>
+    <link rel="stylesheet" href="/styles.css?v=20260722-8" />
+    <script src="/script.js?v=20260722-7" defer></script>
+    <script src="/dashboard.js?v=20260722-1" defer></script>
+  </head>
+  <body class="dashboard-page">
+    <a class="skip-link" href="#main">Skip to dashboard</a>
+    <header class="dashboard-header">
+      <a class="brand brand-image" href="/" aria-label="Broadway Pixels home"><img src="/assets/broadway-pixels-logo-v2.png" alt="Broadway Pixels" width="1201" height="666" /></a>
+      <div class="dashboard-header-actions">
+        <button class="theme-toggle" type="button" data-theme-toggle>Theme: Auto</button>
+        <button id="dashboard-logout" class="dashboard-text-button" type="button" hidden>Sign out</button>
+      </div>
+    </header>
+
+    <main id="main" class="dashboard-main">
+      <section id="dashboard-login" class="dashboard-login" aria-labelledby="login-title">
+        <div class="dashboard-login-copy">
+          <p class="dashboard-label">Private website analytics</p>
+          <h1 id="login-title">See what people are visiting.</h1>
+          <p>First-party traffic stats for BroadwayPixels.com, without third-party trackers or stored IP addresses.</p>
+        </div>
+        <form id="dashboard-login-form" class="dashboard-login-form">
+          <div class="form-field">
+            <label for="dashboard-username">Username</label>
+            <input id="dashboard-username" name="username" type="text" autocomplete="username" required />
+          </div>
+          <div class="form-field">
+            <label for="dashboard-password">Password</label>
+            <input id="dashboard-password" name="password" type="password" autocomplete="current-password" required />
+          </div>
+          <button class="button button-primary" type="submit">Sign in</button>
+          <p id="dashboard-login-status" class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="dashboard-content" class="dashboard-content" hidden aria-labelledby="dashboard-title">
+        <header class="dashboard-intro">
+          <div>
+            <p class="dashboard-label">BroadwayPixels.com</p>
+            <h1 id="dashboard-title">Website stats</h1>
+            <p id="dashboard-updated">Loading the latest activity.</p>
+          </div>
+          <div class="dashboard-ranges" aria-label="Analytics date range">
+            <button type="button" data-days="7">7 days</button>
+            <button class="active" type="button" data-days="30">30 days</button>
+            <button type="button" data-days="90">90 days</button>
+          </div>
+        </header>
+
+        <div id="dashboard-status" class="dashboard-status" role="status" aria-live="polite"></div>
+
+        <section class="dashboard-metrics" aria-label="Traffic summary">
+          <article><span>Page views</span><strong id="metric-views">0</strong><small id="metric-range">Last 30 days</small></article>
+          <article><span>Sessions</span><strong id="metric-sessions">0</strong><small>Anonymous browser sessions</small></article>
+          <article><span>Today</span><strong id="metric-today">0</strong><small>Page views in UTC</small></article>
+          <article><span>Active now</span><strong id="metric-live">0</strong><small>Sessions in the last 30 minutes</small></article>
+        </section>
+
+        <section class="dashboard-panel dashboard-trend" aria-labelledby="trend-title">
+          <div class="dashboard-panel-heading"><h2 id="trend-title">Traffic over time</h2><p>Daily page views</p></div>
+          <div id="traffic-chart" class="traffic-chart" aria-label="Daily page view bar chart"></div>
+        </section>
+
+        <div class="dashboard-grid">
+          <section class="dashboard-panel" aria-labelledby="pages-title">
+            <div class="dashboard-panel-heading"><h2 id="pages-title">Top pages</h2><p>Where people spend time</p></div>
+            <div id="top-pages" class="dashboard-list"></div>
+          </section>
+          <section class="dashboard-panel" aria-labelledby="sources-title">
+            <div class="dashboard-panel-heading"><h2 id="sources-title">Traffic sources</h2><p>How visitors arrive</p></div>
+            <div id="traffic-sources" class="dashboard-list"></div>
+          </section>
+          <section class="dashboard-panel" aria-labelledby="devices-title">
+            <div class="dashboard-panel-heading"><h2 id="devices-title">Devices</h2><p>Screen type by page view</p></div>
+            <div id="device-breakdown" class="device-breakdown"></div>
+          </section>
+          <section class="dashboard-panel dashboard-privacy" aria-labelledby="privacy-title">
+            <div class="dashboard-panel-heading"><h2 id="privacy-title">Privacy built in</h2></div>
+            <p>Analytics use anonymous session IDs and do not retain visitor IP addresses, names, email addresses, or full referrer URLs.</p>
+          </section>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

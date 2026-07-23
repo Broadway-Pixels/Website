@@ -78,7 +78,8 @@ test("sends the support notification and branded confirmation with the ticket nu
   assert.equal(confirmation.to[0], validSubmission.email);
   assert.equal(confirmation.reply_to, "Media@BroadwayPixels.com");
   assert.match(confirmation.subject, /B4829173056/);
-  assert.match(confirmation.html, /broadway-pixels-favicon\.png/);
+  assert.match(confirmation.html, /broadway-pixels-logo-v2\.png/);
+  assert.doesNotMatch(confirmation.html, /border-radius:50%/);
   assert.match(confirmation.html, /We received your message\./);
 });
 

@@ -26,8 +26,8 @@ Then open `http://localhost:8080`.
 - `support.js`: support form submission and UI states
 - `server.mjs`: dependency-free static server with Resend support, private ticket storage, first-party analytics, and dashboard endpoints
 - `api/support.js`: serverless support endpoint for Vercel-compatible hosting
-- `assets/broadway-pixels-logo-v2.png`: transparent Broadway Pixels wordmark used in the header and footer
-- `assets/broadway-pixels-favicon.png`: circular Broadway Pixels logo used in browser tabs and support emails
+- `assets/broadway-pixels-logo-v2.png`: transparent Broadway Pixels wordmark used in the header, footer, and support emails
+- `assets/broadway-pixels-favicon.png`: circular Broadway Pixels logo used in browser tabs
 - `assets/artist-hero.webp` and `assets/artist-portrait.webp`: current artist photography from the live site
 - `assets/anything-cover.jpg`: Spotify artwork for the latest release, Anything
 - `assets/youtube-*.jpg`: current Broadway Pixels YouTube thumbnails

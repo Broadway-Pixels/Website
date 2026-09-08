@@ -9,6 +9,7 @@ import {
 } from "./auth.mjs";
 import { isAllowedOrigin, sendSupportEmails, sendTicketReply, validateSupportSubmission, validateTicketReply } from "../lib/support.mjs";
 import { D1Store, validatePageView } from "./store.mjs";
+import { handleFleeterbaseVerification } from "../lib/fleeterbase-email.mjs";
 
 const ticketIdPattern = /^B\d{10}$/;
 const apiHeaders = {
@@ -205,6 +206,7 @@ async function handleTicketAction(request, env, store, ticketId, action) {
 
 async function handleRequest(request, env) {
   const url = new URL(request.url);
+  if (url.pathname === "/api/internal/fleeterbase-verification") return handleFleeterbaseVerification(request, env);
   const store = new D1Store(env.DB);
   const ticketAction = url.pathname.match(/^\/api\/dashboard\/tickets\/(B\d{10})(?:\/(reply|archive|unarchive))?$/);
   if (ticketAction) return handleTicketAction(request, env, store, ticketAction[1], ticketAction[2] || "delete");

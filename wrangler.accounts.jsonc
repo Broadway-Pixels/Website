@@ -6,6 +6,14 @@
   "assets": {"directory":"./dist-accounts","html_handling":"drop-trailing-slash","not_found_handling":"404-page"},
   "routes": [
     {"pattern":"broadwaypixels.com/account*","zone_name":"broadwaypixels.com"},
-    {"pattern":"www.broadwaypixels.com/account*","zone_name":"broadwaypixels.com"}
+    {"pattern":"www.broadwaypixels.com/account*","zone_name":"broadwaypixels.com"},
+    {"pattern":"broadwaypixels.com/projects","zone_name":"broadwaypixels.com"},
+    {"pattern":"broadwaypixels.com/projects/","zone_name":"broadwaypixels.com"},
+    {"pattern":"broadwaypixels.com/projects.html","zone_name":"broadwaypixels.com"},
+    {"pattern":"broadwaypixels.com/assets/fishadise-logo.png","zone_name":"broadwaypixels.com"},
+    {"pattern":"www.broadwaypixels.com/projects","zone_name":"broadwaypixels.com"},
+    {"pattern":"www.broadwaypixels.com/projects/","zone_name":"broadwaypixels.com"},
+    {"pattern":"www.broadwaypixels.com/projects.html","zone_name":"broadwaypixels.com"},
+    {"pattern":"www.broadwaypixels.com/assets/fishadise-logo.png","zone_name":"broadwaypixels.com"}
   ]
 }

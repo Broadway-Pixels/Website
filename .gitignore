@@ -13,3 +13,5 @@ node_modules/
 /account.js
 /firebase-debug.log
 /firestore-debug.log
+
+/account-navigation.js

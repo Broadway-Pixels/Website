@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {avatarUrl, avatarId} from '../account/avatars.mjs';
 import assert from 'node:assert/strict';
 import { initializeApp, deleteApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, reload, deleteUser, signOut, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
@@ -16,8 +17,10 @@ test('player identity persists across clients; cloud saves reject other players;
   const signed=await signInWithEmailAndPassword(website.auth,email,password);
   assert.equal(signed.user.uid,user.uid);
   assert.equal((await getDocFromServer(doc(website.db,'players',user.uid,'saves','main'))).data().revision,'a'.repeat(32));
-  await updateProfile(signed.user,{displayName:'Website Keeper'});
-  await reload(user);assert.equal(user.displayName,'Website Keeper');
+  await updateProfile(signed.user,{displayName:'Website Keeper',photoURL:avatarUrl('rainbow')});
+  await reload(user);assert.equal(user.displayName,'Website Keeper');assert.equal(avatarId(user.photoURL),'rainbow');
+  await updateProfile(user,{photoURL:avatarUrl('clownfish')});await reload(signed.user);assert.equal(avatarId(signed.user.photoURL),'clownfish');
+  await signOut(website.auth);await signInWithEmailAndPassword(website.auth,email,password);assert.equal(avatarId(website.auth.currentUser.photoURL),'clownfish');
   await createUserWithEmailAndPassword(other.auth,`other-${crypto.randomUUID()}@example.test`,password);
   await assert.rejects(getDocFromServer(doc(other.db,'players',user.uid,'saves','main')),error=>error.code==='permission-denied');
   await assert.rejects(deleteDoc(doc(other.db,'players',user.uid,'saves','main')),error=>error.code==='permission-denied');

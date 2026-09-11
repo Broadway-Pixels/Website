@@ -3,17 +3,187 @@
   "name": "broadwaypixels-accounts",
   "account_id": "74e5863d8bfe799ac2e60352b3a05007",
   "compatibility_date": "2026-09-10",
-  "assets": {"directory":"./dist-accounts","html_handling":"drop-trailing-slash","not_found_handling":"404-page"},
+  "assets": {
+    "directory": "./dist-accounts",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
+  },
   "routes": [
-    {"pattern":"broadwaypixels.com/account*","zone_name":"broadwaypixels.com"},
-    {"pattern":"www.broadwaypixels.com/account*","zone_name":"broadwaypixels.com"},
-    {"pattern":"broadwaypixels.com/projects","zone_name":"broadwaypixels.com"},
-    {"pattern":"broadwaypixels.com/projects/","zone_name":"broadwaypixels.com"},
-    {"pattern":"broadwaypixels.com/projects.html","zone_name":"broadwaypixels.com"},
-    {"pattern":"broadwaypixels.com/assets/fishadise-logo.png","zone_name":"broadwaypixels.com"},
-    {"pattern":"www.broadwaypixels.com/projects","zone_name":"broadwaypixels.com"},
-    {"pattern":"www.broadwaypixels.com/projects/","zone_name":"broadwaypixels.com"},
-    {"pattern":"www.broadwaypixels.com/projects.html","zone_name":"broadwaypixels.com"},
-    {"pattern":"www.broadwaypixels.com/assets/fishadise-logo.png","zone_name":"broadwaypixels.com"}
+    {
+      "pattern": "broadwaypixels.com/account*",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/account*",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/projects",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/projects/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/projects.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/assets/fishadise-logo.png",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/projects",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/projects/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/projects.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/assets/fishadise-logo.png",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/index.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/music",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/music/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/music.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/videos",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/videos/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/videos.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/support",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/support/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/support.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/faq",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/faq/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/faq.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/privacy",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/privacy/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "broadwaypixels.com/privacy.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/index.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/music",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/music/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/music.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/videos",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/videos/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/videos.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/support",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/support/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/support.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/faq",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/faq/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/faq.html",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/privacy",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/privacy/",
+      "zone_name": "broadwaypixels.com"
+    },
+    {
+      "pattern": "www.broadwaypixels.com/privacy.html",
+      "zone_name": "broadwaypixels.com"
+    }
   ]
 }

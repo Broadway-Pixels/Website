@@ -1,11 +1,11 @@
 import { build } from 'esbuild';
-import { copyFile, mkdir, readdir, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readdir, rm, writeFile, cp } from "node:fs/promises";
 import { join } from "node:path";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("../dist/", import.meta.url);
 const files = [
-  "account.html", "account.css", "index.html", "music.html", "projects.html", "support.html", "faq.html", "dashboard.html",
+  "account.html", "account.css", "account-navigation.css", "index.html", "music.html", "projects.html", "support.html", "faq.html", "dashboard.html",
   "privacy.html", "styles.css", "script.js", "theme.js", "support.js", "dashboard.js", "favicon.ico",
 ];
 
@@ -14,8 +14,11 @@ await mkdir(output, { recursive: true });
 await build({ entryPoints: [new URL('../account/client.mjs', import.meta.url).pathname], bundle: true,
   outfile: new URL('account.js', output).pathname, format: 'esm', minify: true,
   define: { ACCOUNT_EMULATOR: 'false' } });
+await cp(new URL('account/avatars/',root),new URL('account/avatars/',output),{recursive:true});
+await build({entryPoints:[new URL('account/navigation.mjs',root).pathname],outfile:new URL('account-navigation.js',output).pathname,bundle:true,format:'esm',minify:true});
 await Promise.all(files.map((file) => copyFile(new URL(file, root), new URL(file, output))));
 await copyFile(new URL('account.js', output), new URL('account.js', root));
+await copyFile(new URL('account-navigation.js', output), new URL('account-navigation.js', root));
 await mkdir(new URL('account/', output), {recursive:true});
 await copyFile(new URL('account-privacy.html', root), new URL('account/privacy.html', output));
 await copyFile(new URL('assets/broadway-pixels-logo-v2.png', root), new URL('account-logo.png', output));

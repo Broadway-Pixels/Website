@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, sendEmailVerification, sendPasswordResetEmail, reload, signOut, EmailAuthProvider, reauthenticateWithCredential, verifyBeforeUpdateEmail, deleteUser } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator, doc, getDocFromServer, deleteDoc } from 'firebase/firestore';
 import { firebaseConfig } from './config.mjs';
+import { avatars, avatarId, avatarUrl } from './avatars.mjs';
 const testing = typeof ACCOUNT_EMULATOR !== 'undefined' && ACCOUNT_EMULATOR && ['localhost','127.0.0.1'].includes(location.hostname);
 const app = initializeApp(testing ? {...firebaseConfig, projectId:'demo-fishadise-accounts',apiKey:'demo-key'} : firebaseConfig);
 const auth = getAuth(app);
@@ -11,7 +12,9 @@ if (testing) {
   connectFirestoreEmulator(db,'127.0.0.1',18080);
 }
 const $ = id => document.getElementById(id);
-let creating = false, busy = false;
+let creating = false, busy = false, selectedAvatar = 'goldfish';
+function selectAvatar(id){selectedAvatar=id; $('profile-avatar').src=new URL(avatarUrl(id)).pathname; for(const button of $('avatar-picker').querySelectorAll('button'))button.setAttribute('aria-pressed',String(button.dataset.avatar===id));}
+for(const item of avatars){const button=document.createElement('button');button.type='button';button.dataset.avatar=item.id;button.setAttribute('aria-label',item.label);button.innerHTML='';const img=document.createElement('img');img.src=new URL(avatarUrl(item.id)).pathname;img.alt='';img.width=64;img.height=64;button.append(img,document.createTextNode(item.label));button.onclick=()=>selectAvatar(item.id);$('avatar-picker').append(button);}
 const status = (message,error=false) => { $('status').textContent=message; $('status').classList.toggle('error',error); };
 const run = async action => {
   if(busy)return;
@@ -34,6 +37,7 @@ async function render(user){
   $('guest').hidden=!!user; $('member').hidden=!user;
   if(!user){$('player-name').value='';$('save-status').textContent='';return;}
   $('player-name').value=user.displayName||'';
+  selectAvatar(avatarId(user.photoURL));
   $('account-email').textContent=user.email||'No email login';
   $('email-status').textContent=user.emailVerified?'Verified':'Not verified';
   $('verify-email').hidden=user.emailVerified;
@@ -55,14 +59,14 @@ $('login-form').onsubmit=event=>{event.preventDefault();run(async()=>{
   if(creating&&(!name||password.length<8)){status('Enter a player name and a password of at least 8 characters.',true);return;}
   const result=creating?await createUserWithEmailAndPassword(auth,email,password):await signInWithEmailAndPassword(auth,email,password);
   $('password').value='';
-  if(creating){await updateProfile(result.user,{displayName:name});await render(result.user);try{await sendEmailVerification(result.user);status('Account created. Check your email to verify your address.');}catch{status('Account created. Use Send verification email to try sending your verification link again.');}}
+  if(creating){await updateProfile(result.user,{displayName:name,photoURL:avatarUrl('goldfish')});await render(result.user);try{await sendEmailVerification(result.user);status('Account created. Check your email to verify your address.');}catch{status('Account created. Use Send verification email to try sending your verification link again.');}}
   else{await render(result.user);status('Signed in successfully.');}
 });};
 async function reset(email){if(!email||!$('email').checkValidity()&&!auth.currentUser){status('Enter your email address first.',true);return;}await sendPasswordResetEmail(auth,email);status('If this email has an account, a password reset link is on its way.');}
 $('reset-password').onclick=()=>run(()=>reset($('email').value.trim()));
 $('member-reset').onclick=()=>run(()=>reset(auth.currentUser.email));
 $('sign-out').onclick=()=>run(async()=>{await signOut(auth);document.querySelectorAll('input').forEach(input=>{input.value='';if(input.type==='checkbox')input.checked=false;});status('Signed out.');});
-$('profile-form').onsubmit=event=>{event.preventDefault();run(async()=>{const name=$('player-name').value.trim();if(!name||name.length>32){status('Use a player name of 1–32 characters.',true);return;}await updateProfile(auth.currentUser,{displayName:name});status('Name saved. Fishadise will update when it reconnects.');});};
+$('profile-form').onsubmit=event=>{event.preventDefault();run(async()=>{const name=$('player-name').value.trim();if(!name||name.length>32){status('Use a player name of 1–32 characters.',true);return;}await updateProfile(auth.currentUser,{displayName:name,photoURL:avatarUrl(selectedAvatar)});status('Profile saved. Your fish icon will update in Fishadise when it reconnects.');});};
 $('verify-email').onclick=()=>run(async()=>{await sendEmailVerification(auth.currentUser);status('Check your email for a verification link.');});
 $('refresh-account').onclick=()=>run(async()=>{await reload(auth.currentUser);await render(auth.currentUser);status('Account refreshed.');});
 async function reauthenticate(password){const user=auth.currentUser;if(!user?.email)throw new Error('No email login');await reauthenticateWithCredential(user,EmailAuthProvider.credential(user.email,password));return user;}

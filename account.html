@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Your account | Broadway Pixels</title>
+<meta name="description" content="Manage your Broadway Pixels account and connected Fishadise progress.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://broadwaypixels.com/account">
+<link rel="icon" href="/assets/broadway-pixels-favicon-48.png">
+<link rel="stylesheet" href="/account.css">
+<script src="/account.js" type="module"></script>
+</head>
+<body>
+<header><a href="/" aria-label="Broadway Pixels home"><img src="/account-logo.png" width="180" height="100" alt="Broadway Pixels"></a><nav aria-label="Main"><a href="https://fishadise.com">Fishadise</a><a href="/support">Support</a></nav></header>
+<main>
+<h1>Your Broadway Pixels account</h1>
+<p class="intro">One login for your game and the website.</p>
+<p id="status" role="status" aria-live="polite">Connecting securely…</p>
+<section id="guest" hidden>
+<div class="modes"><button id="sign-in-mode" class="selected" type="button" aria-pressed="true">Sign in</button><button id="create-mode" type="button" aria-pressed="false">Create account</button></div>
+<form id="login-form">
+<div id="name-row" hidden><label for="new-name">Player name</label><input id="new-name" name="name" autocomplete="nickname" maxlength="32"></div>
+<label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+<label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
+<p id="password-help" class="help" hidden>Use at least 8 characters.</p>
+<p id="create-terms" class="help" hidden>By creating an account, you agree to the <a href="https://fishadise.com/terms">terms</a> and acknowledge our <a href="/account/privacy">privacy policy</a>.</p>
+<button id="login-submit" class="primary" type="submit">Sign in</button>
+<button id="reset-password" class="text-button" type="button">Forgot password?</button>
+</form>
+<p class="game-note">Already playing with Apple or Game Center? Open Fishadise → Settings → Account → Add website login to connect your existing progress.</p>
+</section>
+<section id="member" hidden>
+<div class="section-heading"><h2>Profile</h2><button id="sign-out" class="text-button" type="button">Sign out</button></div>
+<form id="profile-form"><label for="player-name">Player name</label><input id="player-name" autocomplete="nickname" minlength="1" maxlength="32" required><button type="submit">Save name</button></form>
+<dl><dt>Email</dt><dd id="account-email"></dd><dt>Email status</dt><dd id="email-status"></dd><dt>Connected sign-ins</dt><dd id="providers"></dd></dl>
+<div class="actions"><button id="verify-email" type="button">Send verification email</button><button id="refresh-account" type="button">Refresh account</button><button id="member-reset" type="button">Reset password</button></div>
+<h2>Fishadise progress</h2><p id="save-status">Checking your cloud save…</p><p class="help">Turn on Cloud Save in Fishadise to keep your progress connected. Your player name updates in the game when it reconnects.</p>
+<details><summary>Change email address</summary><form id="email-form"><label for="updated-email">New email address</label><input id="updated-email" type="email" maxlength="254" required><label for="email-password">Current password</label><input id="email-password" type="password" autocomplete="current-password" required><button type="submit">Verify new email</button></form></details>
+<details class="delete-section"><summary>Delete account</summary><p>Delete your Broadway Pixels account and Fishadise cloud save permanently. Local progress on your device remains. This cannot be undone.</p><p id="apple-delete-help" hidden>This account is connected to Apple. Delete it in Fishadise → Settings → Account so Apple access is also revoked.</p><form id="delete-form"><label for="delete-password">Current password</label><input id="delete-password" type="password" autocomplete="current-password" required><label class="check"><input id="delete-confirm" type="checkbox" required>I understand that my account and cloud save will be deleted.</label><button class="danger" type="submit">Permanently delete account</button></form></details>
+</section>
+<noscript><p>Turn on JavaScript to securely sign in and manage your account.</p></noscript>
+</main>
+<footer><a href="/account/privacy">Privacy</a><a href="https://fishadise.com/terms">Terms</a><a href="/support">Get help</a><span>Broadway Pixels</span></footer>
+</body></html>

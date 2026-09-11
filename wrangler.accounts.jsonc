@@ -1,0 +1,11 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "broadwaypixels-accounts",
+  "account_id": "74e5863d8bfe799ac2e60352b3a05007",
+  "compatibility_date": "2026-09-10",
+  "assets": {"directory":"./dist-accounts","html_handling":"drop-trailing-slash","not_found_handling":"404-page"},
+  "routes": [
+    {"pattern":"broadwaypixels.com/account*","zone_name":"broadwaypixels.com"},
+    {"pattern":"www.broadwaypixels.com/account*","zone_name":"broadwaypixels.com"}
+  ]
+}

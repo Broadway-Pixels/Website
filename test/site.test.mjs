@@ -64,11 +64,23 @@ test("projects page places Autoclicker after Vidioza and before Steady", async (
 
 test("projects page includes the Steady fitness app", async () => {
   const projects = await readFile(new URL("../projects.html", import.meta.url), "utf8");
+  assert.match(projects, /<a id="steady"[^>]*href="https:\/\/steadyhealthy\.com\/"[^>]*target="_blank"[^>]*rel="noreferrer"/);
   assert.match(projects, /id="steady"/);
   assert.match(projects, /<h2>Steady<\/h2>/);
   assert.match(projects, /mobile fitness and weight-management coach/);
   assert.match(projects, /assets\/steady-app-icon\.png/);
   assert.match(projects, /Steady fitness and weight-management app icon/);
+});
+
+test("projects page includes Electric Buddy with its existing artwork and development status", async () => {
+  const projects = await readFile(new URL("../projects.html", import.meta.url), "utf8");
+  const card = projects.match(/<article id="electric-buddy"[\s\S]*?<\/article>/)?.[0] || "";
+  assert.match(card, /<h2>Electric Buddy<\/h2>/);
+  assert.match(card, /Find nearby EV charging stations/);
+  assert.match(card, /assets\/electric-buddy-icon\.svg/);
+  assert.match(card, /<strong>In development<\/strong>/);
+  const icon = await readFile(new URL("../assets/electric-buddy-icon.svg", import.meta.url), "utf8");
+  assert.match(icon, /<svg/);
 });
 
 test("FAQ page answers common music and AI questions", async () => {

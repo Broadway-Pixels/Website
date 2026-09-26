@@ -225,6 +225,8 @@
   .project-preview-copy > span { display: block; max-width: 42ch; color: var(--muted); }
   .project-preview-copy strong { display: block; align-self: end; margin-top: 24px; color: var(--blue-dark); }
   .project-preview-fleeterbase figure { background: #061a32; }
+  .project-preview-electric-buddy .electric-buddy-art { display: grid; place-items: center; background: #143c30; }
+  .project-preview-electric-buddy .electric-buddy-art img { width: 45%; height: 80%; object-fit: contain; }
   .project-preview-autoclicker .autoclicker-art { background: radial-gradient(circle at 70% 10%, #1fcbff 0, #1156e7 44%, #2810a4 100%); }
   .project-preview-autoclicker .autoclicker-art img { object-fit: contain; padding: clamp(18px, 2.5vw, 34px); }
   .project-preview-steady .steady-art { background: #042449; }

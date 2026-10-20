@@ -3,7 +3,11 @@ const supportStatus = document.querySelector("#support-status");
 const projectSelect = document.querySelector("#support-project");
 const requestIdInput = document.querySelector("#support-request-id");
 
-const projectFromUrl = new URLSearchParams(window.location.search).get("project");
+const supportParams = new URLSearchParams(window.location.search);
+const projectFromUrl = supportParams.get("project");
+const subjectFromUrl = supportParams.get("topic");
+const subjectInput = document.querySelector("#support-topic");
+if (subjectFromUrl && subjectInput) subjectInput.value = subjectFromUrl.slice(0, 120);
 if (projectFromUrl && projectSelect) {
   const matchingOption = Array.from(projectSelect.options).find((option) => option.value.toLowerCase() === projectFromUrl.toLowerCase());
   if (matchingOption) projectSelect.value = matchingOption.value;

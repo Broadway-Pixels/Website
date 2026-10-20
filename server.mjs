@@ -33,10 +33,13 @@ const mimeTypes = {
   ".png": "image/png",
   ".svg": "image/svg+xml",
   ".webp": "image/webp",
+  ".ttf": "font/ttf",
 };
 const publicFiles = new Set(["/index.html", "/music.html", "/content.html", "/projects.html", "/support.html", "/faq.html", "/dashboard.html", "/privacy.html", "/tanktopia-eula.html", "/steady-privacy.html", "/steady-terms.html", "/styles.css", "/script.js", "/theme.js", "/support.js", "/dashboard.js", "/favicon.ico"]);
 
 publicFiles.add("/tanktopia-privacy.html");
+publicFiles.add("/fishadise.html");
+publicFiles.add("/fishadise.css");
 publicFiles.add("/label.html");
 publicFiles.add("/label.css");
 

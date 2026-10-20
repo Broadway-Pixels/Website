@@ -1,21 +1,22 @@
 import { copyFile, mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { legacyPages } from "../lib/routes.mjs";
 
 const root = new URL("../", import.meta.url);
 const output = new URL("../dist/", import.meta.url);
 const files = [
   "label.html", "label.css",
   "index.html", "music.html", "projects.html", "support.html", "faq.html", "dashboard.html",
-  "privacy.html", "styles.css", "script.js", "theme.js", "support.js", "dashboard.js", "favicon.ico",
+  "privacy.html", "fishadise.html", "fishadise.css", "styles.css", "script.js", "theme.js", "support.js", "dashboard.js", "favicon.ico",
 ];
 
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
 await Promise.all(files.map((file) => copyFile(new URL(file, root), new URL(file, output))));
 await copyFile(new URL("content.html", root), new URL("videos.html", output));
-await mkdir(new URL("tanktopia/", output), { recursive: true });
-await copyFile(new URL("tanktopia-privacy.html", root), new URL("tanktopia/privacy.html", output));
-await copyFile(new URL("tanktopia-eula.html", root), new URL("tanktopia/eula.html", output));
+await mkdir(new URL("fishadise/", output), { recursive: true });
+await copyFile(new URL("tanktopia-privacy.html", root), new URL("fishadise/privacy.html", output));
+await copyFile(new URL("tanktopia-eula.html", root), new URL("fishadise/eula.html", output));
 await mkdir(new URL("steady/", output), { recursive: true });
 await copyFile(new URL("steady-privacy.html", root), new URL("steady/privacy.html", output));
 await copyFile(new URL("steady-terms.html", root), new URL("steady/terms.html", output));
@@ -40,17 +41,10 @@ https://:version.:subdomain.workers.dev/*
   X-Robots-Tag: noindex
 `, "utf8");
 
-await writeFile(new URL("_redirects", output), `/label.html /label 308
-/label/ /label 308
-/content /videos 308
-/content.html /videos 308
-/videos.html /videos 308
-/tanktopia-eula /tanktopia/eula 308
-/tanktopia-eula.html /tanktopia/eula 308
-/steady-privacy /steady/privacy 308
-/steady-privacy.html /steady/privacy 308
-/steady-terms /steady/terms 308
-/steady-terms.html /steady/terms 308
-`, "utf8");
+await writeFile(new URL("_redirects", output), [
+  "/content /videos 308", "/videos.html /videos 308",
+  "/steady-privacy /steady/privacy 308", "/steady-terms /steady/terms 308",
+  ...[...legacyPages].map(([from, to]) => `${from} ${to} 308`),
+].join("\n") + "\n", "utf8");
 
 console.log(`Built Broadway Pixels static assets in ${join(output.pathname)}`);

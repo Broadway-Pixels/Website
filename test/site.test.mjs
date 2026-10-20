@@ -4,6 +4,16 @@ import test from "node:test";
 
 const publicPages = ["index.html", "music.html", "content.html", "projects.html", "support.html", "faq.html", "privacy.html", "tanktopia-eula.html", "steady-privacy.html", "steady-terms.html"];
 
+test("Broadway Pixels does not promote the legacy Steady legal pages", async () => {
+  const privacy = await readFile(new URL("../privacy.html", import.meta.url), "utf8");
+  assert.doesNotMatch(privacy, /href="\/steady\/(?:privacy|terms)"/);
+  for (const file of publicPages) {
+    const page = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
+    const footer = page.split('<footer class="site-footer">')[1] ?? '';
+    assert.doesNotMatch(footer, /href="\/steady\/(?:privacy|terms)"/);
+  }
+});
+
 test("homepage uses the Broadway Pixels creator and developer SEO title", async () => {
   const homepage = await readFile(new URL("../index.html", import.meta.url), "utf8");
   assert.match(homepage, /<title>Broadway Pixels - Content Creator and Developer<\/title>/);

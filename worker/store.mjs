@@ -1,6 +1,7 @@
 const pageNames = new Map([
   ["/", "Home"],
   ["/music", "Music"],
+  ["/label", "Label"],
   ["/videos", "Videos"],
   ["/projects", "Projects"],
   ["/support", "Support"],

@@ -4,6 +4,7 @@ import { join } from "node:path";
 const root = new URL("../", import.meta.url);
 const output = new URL("../dist/", import.meta.url);
 const files = [
+  "label.html", "label.css",
   "index.html", "music.html", "projects.html", "support.html", "faq.html", "dashboard.html",
   "privacy.html", "styles.css", "script.js", "theme.js", "support.js", "dashboard.js", "favicon.ico",
 ];
@@ -39,7 +40,9 @@ https://:version.:subdomain.workers.dev/*
   X-Robots-Tag: noindex
 `, "utf8");
 
-await writeFile(new URL("_redirects", output), `/content /videos 308
+await writeFile(new URL("_redirects", output), `/label.html /label 308
+/label/ /label 308
+/content /videos 308
 /content.html /videos 308
 /videos.html /videos 308
 /tanktopia-eula /tanktopia/eula 308

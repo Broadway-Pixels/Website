@@ -75,7 +75,7 @@ function deviceClass() {
 }
 
 function recordPageView() {
-  const trackedPages = new Set(["/", "/music", "/videos", "/projects", "/support"]);
+  const trackedPages = new Set(["/", "/music", "/label", "/videos", "/projects", "/support"]);
   if (!trackedPages.has(window.location.pathname)) return;
   if (!["broadwaypixels.com", "www.broadwaypixels.com"].includes(window.location.hostname)) return;
   if (navigator.doNotTrack === "1") return;

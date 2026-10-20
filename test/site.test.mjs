@@ -50,7 +50,7 @@ test("projects page places Autoclicker after Vidioza and before Steady", async (
   assert.match(projects, /href="https:\/\/fleeterbase\.com\/"/);
   assert.match(projects, /cloud-synced rental operations workspace for independent hosts/);
   assert.match(projects, /assets\/fleeterbase-preview\.svg/);
-  const fleeterbaseCard = projects.match(/<a id="fleeterbase"[\s\S]*?<\/a>/)?.[0] || "";
+  const fleeterbaseCard = projects.match(/<article id="fleeterbase"[\s\S]*?<\/article>/)?.[0] || "";
   assert.doesNotMatch(fleeterbaseCard, /<strong>/);
   assert.match(projects, /id="autoclicker"/);
   assert.match(projects, /<h2>Autoclicker<\/h2>/);
@@ -64,7 +64,7 @@ test("projects page places Autoclicker after Vidioza and before Steady", async (
 
 test("projects page includes the Steady fitness app", async () => {
   const projects = await readFile(new URL("../projects.html", import.meta.url), "utf8");
-  assert.match(projects, /<a id="steady"[^>]*href="https:\/\/steadyhealthy\.com\/"[^>]*target="_blank"[^>]*rel="noreferrer"/);
+  assert.match(projects, /href="https:\/\/steadyhealthy\.com\/app"/);
   assert.match(projects, /id="steady"/);
   assert.match(projects, /<h2>Steady<\/h2>/);
   assert.match(projects, /mobile fitness and weight-management coach/);
@@ -72,13 +72,14 @@ test("projects page includes the Steady fitness app", async () => {
   assert.match(projects, /Steady fitness and weight-management app icon/);
 });
 
-test("projects page includes Electric Buddy with its existing artwork and development status", async () => {
+test("projects page includes Electric Buddy with its existing artwork and live app", async () => {
   const projects = await readFile(new URL("../projects.html", import.meta.url), "utf8");
   const card = projects.match(/<article id="electric-buddy"[\s\S]*?<\/article>/)?.[0] || "";
   assert.match(card, /<h2>Electric Buddy<\/h2>/);
   assert.match(card, /Find nearby EV charging stations/);
   assert.match(card, /assets\/electric-buddy-icon\.svg/);
-  assert.match(card, /<strong>In development<\/strong>/);
+  assert.doesNotMatch(card, /In development/);
+  assert.match(card, /href="https:\/\/electricbuddy\.org\/stations\/"/);
   const icon = await readFile(new URL("../assets/electric-buddy-icon.svg", import.meta.url), "utf8");
   assert.match(icon, /<svg/);
 });

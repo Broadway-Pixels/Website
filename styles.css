@@ -223,8 +223,6 @@
   .project-preview-copy { align-self: stretch; display: grid; grid-template-rows: auto 1fr auto; align-content: start; padding: clamp(24px, 2.2vw, 36px); }
   .project-preview-copy h2 { margin-block: 0 14px; font-size: clamp(2rem, 3vw, 3.5rem); }
   .project-preview-copy > span { display: block; max-width: 42ch; color: var(--muted); }
-  .project-links { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-top: 20px; }
-  .project-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue); font-weight: 750; text-underline-offset: 4px; }
   .project-preview-copy strong { display: block; align-self: end; margin-top: 24px; color: var(--blue-dark); }
   .project-preview-fleeterbase figure { background: #061a32; }
   .project-preview-electric-buddy .electric-buddy-art { display: grid; place-items: center; background: #143c30; }

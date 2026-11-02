@@ -49,7 +49,7 @@ async function render(user){
     const save=await getDocFromServer(doc(db,'players',user.uid,'saves','main'));
     if(auth.currentUser?.uid!==user.uid)return;
     const date=save.data()?.savedAt?.toDate?.();
-    $('save-status').textContent=save.exists() ? `Cloud save connected${date?'. Last saved '+date.toLocaleString():'.'}` : 'No cloud save yet. Sign in with this account in Fishadise, then turn on Cloud Save.';
+    $('save-status').textContent=save.exists() ? `Cloud save connected${date?'. Last saved '+date.toLocaleString():'.'}` : 'No cloud save yet. Sign in with this account in Fishadise. Progress syncs automatically while you play.';
   }catch{if(auth.currentUser?.uid===user.uid)$('save-status').textContent='Could not check your cloud save. Your account is signed in; refresh to try again.';}
 }
 onAuthStateChanged(auth,user=>{render(user);if(!busy)status(user?'You’re signed in.':'Sign in or create an account to get started.');},()=>status('Account connection failed. Refresh to try again.',true));

@@ -7,7 +7,7 @@ const output = new URL("../dist/", import.meta.url);
 const files = [
   "label.html", "label.css",
   "index.html", "music.html", "projects.html", "support.html", "faq.html", "dashboard.html",
-  "privacy.html", "fishadise.html", "fishadise.css", "styles.css", "script.js", "theme.js", "support.js", "dashboard.js", "favicon.ico",
+  "privacy.html", "fishadise.html", "fishadise.css", "styles.css", "script.js", "theme.js", "support.js", "dashboard.js", "favicon.ico", "app-ads.txt",
 ];
 
 await rm(output, { recursive: true, force: true });
@@ -20,6 +20,9 @@ await copyFile(new URL("tanktopia-eula.html", root), new URL("fishadise/eula.htm
 await mkdir(new URL("steady/", output), { recursive: true });
 await copyFile(new URL("steady-privacy.html", root), new URL("steady/privacy.html", output));
 await copyFile(new URL("steady-terms.html", root), new URL("steady/terms.html", output));
+await mkdir(new URL("match-mania/", output), { recursive: true });
+await copyFile(new URL("match-mania-privacy.html", root), new URL("match-mania/privacy.html", output));
+await copyFile(new URL("match-mania-delete-account.html", root), new URL("match-mania/delete-account.html", output));
 await mkdir(new URL("assets/", output), { recursive: true });
 const assets = await readdir(new URL("assets/", root), { withFileTypes: true });
 await Promise.all(assets.filter((entry) => entry.isFile()).map((entry) => (

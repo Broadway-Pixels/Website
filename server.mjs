@@ -34,6 +34,7 @@ const mimeTypes = {
   ".svg": "image/svg+xml",
   ".webp": "image/webp",
   ".ttf": "font/ttf",
+  ".txt": "text/plain; charset=utf-8",
 };
 const publicFiles = new Set(["/index.html", "/music.html", "/content.html", "/projects.html", "/support.html", "/faq.html", "/dashboard.html", "/privacy.html", "/tanktopia-eula.html", "/steady-privacy.html", "/steady-terms.html", "/styles.css", "/script.js", "/theme.js", "/support.js", "/dashboard.js", "/favicon.ico"]);
 
@@ -42,6 +43,9 @@ publicFiles.add("/fishadise.html");
 publicFiles.add("/fishadise.css");
 publicFiles.add("/label.html");
 publicFiles.add("/label.css");
+publicFiles.add("/match-mania-privacy.html");
+publicFiles.add("/match-mania-delete-account.html");
+publicFiles.add("/app-ads.txt");
 
 function json(response, status, body, headers = {}) {
   response.writeHead(status, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...headers });

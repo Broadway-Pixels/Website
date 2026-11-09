@@ -142,14 +142,10 @@
   .music-page-hero { width: var(--container); margin-inline: auto; padding-block: clamp(70px, 10vw, 130px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr); align-items: center; gap: clamp(48px, 9vw, 130px); border-bottom: 1px solid var(--line); }
   .music-page-hero h1 { font-size: clamp(2.1rem, 5vw, 5rem); white-space: nowrap; }
   .platform-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-  .music-page-hero .platform-actions { margin-top: 30px; }
+  .music-page-hero .platform-actions { justify-content: center; margin-top: 30px; }
   .platform-actions .button-secondary { margin-top: 0; }
-  .latest-release-card { overflow: hidden; display: grid; grid-template-columns: 1fr 0.72fr; align-items: center; background: var(--blue-fill); color: white; border-radius: var(--radius); text-decoration: none; }
-  .latest-release-card img { width: 100%; height: 100%; min-height: 330px; object-fit: cover; }
-  .latest-release-card > div { padding: 28px; display: grid; gap: 7px; }
-  .latest-release-card span { color: var(--yellow); font-weight: 800; }
-  .latest-release-card strong { font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1; letter-spacing: -0.04em; }
-  .latest-release-card small { color: var(--blue-soft); font-size: 0.95rem; }
+  .latest-release-card { display: block; width: min(100%, 400px); justify-self: end; overflow: hidden; border-radius: var(--radius); }
+  .latest-release-card img { width: 100%; height: auto; }
 
   .releases-section { width: var(--container); margin-inline: auto; padding-block: 20px clamp(90px, 12vw, 160px); }
   .releases-heading { max-width: 680px; margin-bottom: 52px; }
@@ -161,8 +157,10 @@
   .song-copy span { font-size: 1.08rem; font-weight: 850; }
   .song-copy small { color: var(--muted); font-size: 0.9rem; }
   .release-links { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
-  .release-links a { padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; color: var(--blue); font-size: 0.8rem; font-weight: 850; text-decoration: none; white-space: nowrap; transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease; }
-  .release-links a:hover { border-color: var(--blue-fill); background: var(--blue-fill); color: white; }
+  .release-links a { display: grid; place-items: center; inline-size: 44px; block-size: 44px; border: 1px solid var(--line); border-radius: 8px; background: var(--sky); transition: background-color 160ms ease, border-color 160ms ease; }
+  .release-links img { inline-size: 22px; block-size: 22px; }
+  .release-links a:hover { border-color: var(--blue-fill); background: var(--blue-fill); }
+  .release-links a:hover img, html[data-theme="dark"] .release-links img { filter: brightness(0) invert(1); }
   .song-row:hover, .featured-song { background: var(--sky); }
   .song-row:hover span { color: var(--blue); }
 
@@ -473,6 +471,8 @@
     .about-section { grid-template-columns: 1fr; }
     .music-page-hero { grid-template-columns: 1fr; }
     .music-page-hero > div { min-width: 0; }
+    .latest-release-card { justify-self: center; }
+    .song-copy { grid-template-columns: 1fr; gap: 2px; }
     .support-hero, .support-layout { grid-template-columns: 1fr; }
     .support-hero-art { aspect-ratio: 4 / 3; }
     .support-aside { position: static; }
@@ -504,11 +504,8 @@
     .hero-actions { align-items: flex-start; flex-direction: column; }
     .hero-art { aspect-ratio: 1; }
     .brand-image img { block-size: 38px; }
-    .latest-release-card { grid-template-columns: 1fr; }
-    .latest-release-card img { min-height: 0; }
     .release-year { grid-template-columns: 1fr; gap: 18px; }
     .song-row { grid-template-columns: 1fr; gap: 10px; padding-block: 14px; }
-    .song-copy { grid-template-columns: 1fr; gap: 2px; }
     .release-links { justify-content: flex-start; }
     .project-preview .tanktopia-logo { width: 68%; }
     .short-card, .short-card-featured { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }

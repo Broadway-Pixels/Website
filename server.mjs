@@ -44,7 +44,7 @@ publicFiles.add("/fishadise.css");
 publicFiles.add("/label.html");
 publicFiles.add("/label.css");
 publicFiles.add("/match-mania-privacy.html");
-publicFiles.add("/match-mania-delete-account.html");
+publicFiles.add("/delete-account.html");
 publicFiles.add("/app-ads.txt");
 
 function json(response, status, body, headers = {}) {

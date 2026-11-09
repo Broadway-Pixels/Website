@@ -44,3 +44,18 @@ test("Fishadise preserves former landing and policy links", () => {
     assert.deepEqual(resolvePublicRequest(`/tanktopia${suffix}`), { type: "redirect", location: `/fishadise${suffix}` });
   }
 });
+
+test("serves the shared game deletion page and preserves Match Mania links", () => {
+  assert.deepEqual(resolvePublicRequest("/delete-account"), { type: "file", file: "/delete-account.html" });
+  assert.deepEqual(resolvePublicRequest("/match-mania/privacy"), { type: "file", file: "/match-mania-privacy.html" });
+  for (const path of [
+    "/delete-account/",
+    "/delete-account.html",
+    "/match-mania/delete-account",
+    "/match-mania/delete-account/",
+    "/match-mania/delete-account.html",
+    "/match-mania-delete-account.html",
+  ]) {
+    assert.deepEqual(resolvePublicRequest(path), { type: "redirect", location: "/delete-account" });
+  }
+});

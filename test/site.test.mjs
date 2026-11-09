@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 
-const publicPages = ["index.html", "music.html", "content.html", "projects.html", "support.html", "faq.html", "privacy.html", "tanktopia-eula.html", "steady-privacy.html", "steady-terms.html"];
+const publicPages = ["index.html", "music.html", "content.html", "projects.html", "support.html", "faq.html", "privacy.html", "delete-account.html", "tanktopia-eula.html", "steady-privacy.html", "steady-terms.html"];
 
 test("Broadway Pixels does not promote the legacy Steady legal pages", async () => {
   const privacy = await readFile(new URL("../privacy.html", import.meta.url), "utf8");
@@ -115,6 +115,19 @@ test("every public page offers Contact and FAQ under Support", async () => {
     assert.match(page, /href="\/faq"[^>]*>FAQ<\/a>/);
     assert.ok(page.indexOf('href="/faq"') < page.indexOf('href="/support"'));
   });
+});
+
+test("game account deletion provides request paths for current and future games", async () => {
+  const page = await readFile(new URL("../delete-account.html", import.meta.url), "utf8");
+  assert.match(page, /rel="canonical" href="https:\/\/broadwaypixels\.com\/delete-account"/);
+  for (const topic of ["Kitty Match Mania account deletion", "Doggy Match Mania account deletion", "Game account deletion"]) {
+    assert.ok(page.includes(`href="/support?project=Projects&amp;topic=${encodeURIComponent(topic)}#support-form"`));
+  }
+  const referringPages = ["support.html", "match-mania-privacy.html"];
+  for (const file of referringPages) {
+    const referringPage = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
+    assert.match(referringPage, /href="\/delete-account"/);
+  }
 });
 
 test("Tanktopia legal pages disclose optional mobile services and user data routes", async () => {

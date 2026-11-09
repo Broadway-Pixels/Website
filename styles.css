@@ -132,6 +132,7 @@
   .artist-hero-art { aspect-ratio: 4 / 3; }
   .artist-hero-art img { object-position: 63% center; }
   .creator-hero { min-height: min(650px, calc(100dvh - 72px)); }
+  .creator-hero .hero-actions { display: block; text-align: center; }
   .home-page .hero-copy > p { max-width: 32ch; }
   .home-page .about-section { padding-block: clamp(68px, 8vw, 108px); }
 

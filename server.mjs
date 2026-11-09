@@ -13,7 +13,7 @@ import {
   verifyDashboardSession,
 } from "./lib/dashboard-auth.mjs";
 import { resolvePublicRequest } from "./lib/routes.mjs";
-import { isAllowedOrigin, sendSupportEmails, sendTicketReply, validateSupportSubmission, validateTicketReply } from "./lib/support.mjs";
+import { isAllowedOrigin, sendSupportEmails, sendTicketReply, validateDeletionRequest, validateSupportSubmission, validateTicketReply } from "./lib/support.mjs";
 import { createTicketId, TicketStore } from "./lib/tickets.mjs";
 
 const root = fileURLToPath(new URL(".", import.meta.url));
@@ -45,6 +45,7 @@ publicFiles.add("/label.html");
 publicFiles.add("/label.css");
 publicFiles.add("/match-mania-privacy.html");
 publicFiles.add("/delete-account.html");
+publicFiles.add("/delete-account.js");
 publicFiles.add("/app-ads.txt");
 
 function json(response, status, body, headers = {}) {
@@ -74,7 +75,7 @@ async function readJson(request) {
   return JSON.parse(body || "{}");
 }
 
-async function handleSupport(request, response) {
+async function handleSupport(request, response, validate = validateSupportSubmission, successMessage = "Support request sent.") {
   if (request.method !== "POST") return json(response, 405, { message: "Method not allowed." });
   if (!String(request.headers["content-type"] || "").startsWith("application/json")) return json(response, 415, { message: "Content type must be application/json." });
   if (!isAllowedOrigin(request.headers, process.env.ALLOWED_ORIGINS)) return json(response, 403, { message: "Request origin is not allowed." });
@@ -86,7 +87,7 @@ async function handleSupport(request, response) {
   } catch {
     return json(response, 400, { message: "Request body must be valid JSON." });
   }
-  const validation = validateSupportSubmission(body);
+  const validation = validate(body);
   if (!validation.ok) {
     if (validation.silent) return json(response, 200, { message: validation.message });
     return json(response, 422, { message: validation.message });
@@ -115,7 +116,7 @@ async function handleSupport(request, response) {
   }
 
   return json(response, 200, {
-    message: "Support request sent.",
+    message: successMessage,
     ticketId,
     confirmationSent: result.confirmationSent,
   });
@@ -265,6 +266,7 @@ createServer(async (request, response) => {
   const ticketAction = url.pathname.match(/^\/api\/dashboard\/tickets\/(B\d{10})(?:\/(reply|archive|unarchive))?$/);
   if (ticketAction) return handleDashboardTicketAction(request, response, ticketAction[1], ticketAction[2] || "delete");
   if (url.pathname === "/api/support") return handleSupport(request, response);
+  if (url.pathname === "/api/deletion-requests") return handleSupport(request, response, validateDeletionRequest, "Deletion request sent.");
   if (url.pathname === "/api/analytics/view") return handleAnalytics(request, response);
   if (url.pathname === "/api/dashboard/login") return handleDashboardLogin(request, response);
   if (url.pathname === "/api/dashboard/stats") return handleDashboardStats(request, response, url);

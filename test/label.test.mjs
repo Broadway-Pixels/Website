@@ -7,7 +7,7 @@ import { validatePageView } from '../worker/store.mjs';
 test('label page preserves three artist identities and real destinations', async () => {
   const html = await readFile(new URL('../label.html', import.meta.url), 'utf8');
   assert.equal((html.match(/class="label-artist"/g) || []).length, 3);
-  for (const name of ['Broadway Pixels', 'Roma Williams', 'RYZFORGE']) assert.ok(html.includes(`<h3>${name}</h3>`));
+  for (const name of ['Broadway Pixels', 'Roma Williams', 'Ryzforge']) assert.ok(html.includes(`<h3>${name}</h3>`));
   assert.match(html, /aria-current="page" href="\/label"/);
   assert.match(html, /href="https:\/\/ryzforge.com\/"/);
   assert.match(html, /href="\/support\?project=Music&amp;topic=Label%20inquiry"/);

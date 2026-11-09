@@ -7,7 +7,7 @@ import {
   verifyDashboardCredentials,
   verifyDashboardSession,
 } from "./auth.mjs";
-import { isAllowedOrigin, sendSupportEmails, sendTicketReply, validateSupportSubmission, validateTicketReply } from "../lib/support.mjs";
+import { isAllowedOrigin, sendSupportEmails, sendTicketReply, validateDeletionRequest, validateSupportSubmission, validateTicketReply } from "../lib/support.mjs";
 import { D1Store, validatePageView } from "./store.mjs";
 import { handleFleeterbaseVerification } from "../lib/fleeterbase-email.mjs";
 
@@ -68,7 +68,7 @@ async function dashboardAuthorized(request, env) {
   return verifyDashboardSession(token, env);
 }
 
-async function handleSupport(request, env, store) {
+async function handleSupport(request, env, store, validate = validateSupportSubmission, successMessage = "Support request sent.") {
   if (request.method !== "POST") return json(405, { message: "Method not allowed." });
   if (!String(request.headers.get("Content-Type") || "").startsWith("application/json")) return json(415, { message: "Content type must be application/json." });
   if (!allowed(request, env)) return json(403, { message: "Request origin is not allowed." });
@@ -79,7 +79,7 @@ async function handleSupport(request, env, store) {
   } catch {
     return json(400, { message: "Request body must be valid JSON." });
   }
-  const validation = validateSupportSubmission(body);
+  const validation = validate(body);
   if (!validation.ok) return json(validation.silent ? 200 : 422, { message: validation.message });
   const ticketId = await createTicketId(validation.submission.requestId);
   const result = await sendSupportEmails(validation.submission, ticketId, env);
@@ -101,7 +101,7 @@ async function handleSupport(request, env, store) {
     console.error("Support ticket recording failed", error);
     return json(500, { message: "Your email was sent, but the ticket could not be recorded. Please submit again." });
   }
-  return json(200, { message: "Support request sent.", ticketId, confirmationSent: result.confirmationSent });
+  return json(200, { message: successMessage, ticketId, confirmationSent: result.confirmationSent });
 }
 
 async function handleAnalytics(request, env, store) {
@@ -211,6 +211,7 @@ async function handleRequest(request, env) {
   const ticketAction = url.pathname.match(/^\/api\/dashboard\/tickets\/(B\d{10})(?:\/(reply|archive|unarchive))?$/);
   if (ticketAction) return handleTicketAction(request, env, store, ticketAction[1], ticketAction[2] || "delete");
   if (url.pathname === "/api/support") return handleSupport(request, env, store);
+  if (url.pathname === "/api/deletion-requests") return handleSupport(request, env, store, validateDeletionRequest, "Deletion request sent.");
   if (url.pathname === "/api/analytics/view") return handleAnalytics(request, env, store);
   if (url.pathname === "/api/dashboard/login") return handleDashboardLogin(request, env, store);
   if (url.pathname === "/api/dashboard/stats") return handleDashboardStats(request, env, store, url);

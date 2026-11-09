@@ -32,6 +32,7 @@ test("rejects unknown projects and short messages", () => {
   assert.equal(validateSupportSubmission({ ...validSubmission, project: "KixKan" }).ok, false);
   assert.equal(validateSupportSubmission({ ...validSubmission, project: "Autoclicker" }).ok, false);
   assert.equal(validateSupportSubmission({ ...validSubmission, project: "Steady" }).ok, false);
+  assert.equal(validateSupportSubmission({ ...validSubmission, project: "Deletion Requests" }).ok, false);
   assert.equal(validateSupportSubmission({ ...validSubmission, message: "Too short" }).ok, false);
 });
 

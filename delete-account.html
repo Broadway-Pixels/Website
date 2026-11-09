@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#1557d6" />
     <meta name="description" content="Request deletion of your Broadway Pixels game account and its associated data." />
-    <meta property="og:title" content="Delete a Game Account | Broadway Pixels" />
+    <meta property="og:title" content="Deletion Requests | Broadway Pixels" />
     <meta property="og:description" content="Request deletion of your Broadway Pixels game account and its associated data." />
-    <title>Delete a Game Account | Broadway Pixels</title>
+    <title>Deletion Requests | Broadway Pixels</title>
     <link rel="canonical" href="https://broadwaypixels.com/delete-account" />
     <link rel="icon" type="image/png" sizes="48x48" href="/assets/broadway-pixels-favicon-48.png?v=20260902-1" />
     <link rel="shortcut icon" href="/favicon.ico?v=20260902-1" />
@@ -15,6 +15,7 @@
     <script src="/theme.js?v=20260722-2"></script>
     <link rel="stylesheet" href="/styles.css?v=20260823-2" />
     <script src="/script.js?v=20260724-1" defer></script>
+    <script src="/delete-account.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -29,36 +30,55 @@
         <a href="/videos">Videos</a>
         <a href="/projects">Projects</a>
         <details class="nav-group"><summary>Support <svg aria-hidden="true" viewBox="0 0 12 8"><path d="M1 1.25 6 6.25l5-5" /></svg></summary><div class="nav-submenu"><a href="/faq">FAQ</a><a href="/support">Contact</a></div></details>
+        <a href="/account">My Account</a>
       </nav>
     </header>
 
-    <main id="main">
-      <header class="projects-hero">
-        <p class="hero-kicker">Broadway Pixels Games</p>
-        <h1>Delete your game account</h1>
-        <p>Request deletion of your account and its associated data for a Broadway Pixels game.</p>
-      </header>
-      <section class="section" aria-labelledby="game-deletion-title">
-        <div class="section-heading">
-          <h2 id="game-deletion-title">Request deletion</h2>
-          <p>Choose a game to open the Broadway Pixels support form.</p>
-        </div>
-        <div class="principles">
-          <article class="principle">
-            <h3>Choose your game</h3>
-            <p><a class="text-link" href="/support?project=Projects&amp;topic=Kitty%20Match%20Mania%20account%20deletion#support-form">Request deletion for Kitty Match Mania</a></p>
-            <p><a class="text-link" href="/support?project=Projects&amp;topic=Doggy%20Match%20Mania%20account%20deletion#support-form">Request deletion for Doggy Match Mania</a></p>
-            <p><a class="text-link" href="/support?project=Projects&amp;topic=Game%20account%20deletion#support-form">Request deletion for another Broadway Pixels game</a></p>
-            <p>Enter your name and an email address for our reply. In your message, list each game and ask us to delete your account and its associated data. You can also email <a class="text-link" href="mailto:Media@BroadwayPixels.com">Media@BroadwayPixels.com</a> with the same details.</p>
-          </article>
-          <article class="principle">
-            <h3>What happens next</h3>
-            <p>Broadway Pixels support reviews your request and may follow up by email to verify that the account belongs to you. Keep passwords, sign-in codes, and access tokens private.</p>
-            <p>For Kitty Match Mania and Doggy Match Mania, your request covers the Facebook-connected sync account and the cloud copy of your level stars and best scores. To remove the local copy, clear the game’s storage in Android Settings. You manage your Facebook account separately through Meta.</p>
-            <p>The <a class="text-link" href="/match-mania/privacy">Match Mania privacy policy</a> explains what these two games save.</p>
-          </article>
-        </div>
-      </section>
+    <main id="main" class="faq-page-list">
+      <div class="support-form-wrap">
+        <header class="support-form-heading">
+          <h1 id="deletion-title">Deletion Requests</h1>
+        </header>
+        <form id="deletion-form" class="support-form" action="/api/deletion-requests" method="post" aria-labelledby="deletion-title">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="deletion-name">Your name</label>
+              <input id="deletion-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" required />
+            </div>
+            <div class="form-field">
+              <label for="deletion-email">Reply email</label>
+              <input id="deletion-email" name="email" type="email" autocomplete="email" maxlength="254" required />
+            </div>
+            <div class="form-field">
+              <label for="deletion-game">Game</label>
+              <select id="deletion-game" name="game" required>
+                <option value="">Choose a game</option>
+                <option>Doggy Match Mania</option>
+                <option>Kitty Match Mania</option>
+                <option value="other">Other game</option>
+              </select>
+            </div>
+            <div class="form-field" id="deletion-other-game-field" hidden>
+              <label for="deletion-other-game">Game name</label>
+              <input id="deletion-other-game" name="otherGame" type="text" minlength="2" maxlength="100" disabled />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="deletion-details">Account details <span>(optional)</span></label>
+            <textarea id="deletion-details" name="details" rows="3" maxlength="1000" aria-describedby="deletion-note"></textarea>
+            <small id="deletion-note">Do not include passwords or sign-in codes.</small>
+          </div>
+          <div class="honeypot" aria-hidden="true">
+            <label for="deletion-website">Website</label>
+            <input id="deletion-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <div class="support-submit-row">
+            <button class="button button-primary" type="submit" disabled>Send request</button>
+          </div>
+          <p id="deletion-status" class="form-status" role="status"></p>
+          <noscript><p>Enable JavaScript to send your deletion request.</p></noscript>
+        </form>
+      </div>
     </main>
 
     <footer class="site-footer">

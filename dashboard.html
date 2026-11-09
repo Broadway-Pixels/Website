@@ -73,9 +73,10 @@
             <div><h2 id="tickets-title">Support tickets</h2><p>Reply, archive, or remove messages submitted through BroadwayPixels.com.</p></div>
             <strong id="ticket-count">0 tickets</strong>
           </div>
-          <div class="ticket-filters" aria-label="Filter support tickets">
-            <button class="active" type="button" data-ticket-view="open">Open <span id="open-ticket-count">0</span></button>
-            <button type="button" data-ticket-view="archived">Archived <span id="archived-ticket-count">0</span></button>
+          <div class="ticket-filters" aria-label="Filter tickets">
+            <button class="active" type="button" data-ticket-view="open" aria-pressed="true">Open <span id="open-ticket-count">0</span></button>
+            <button type="button" data-ticket-view="archived" aria-pressed="false">Archived <span id="archived-ticket-count">0</span></button>
+            <button type="button" data-ticket-view="deletion" aria-pressed="false">Deletion Requests <span id="deletion-ticket-count">0</span></button>
           </div>
           <div id="ticket-list" class="ticket-list"></div>
         </section>

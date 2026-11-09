@@ -117,12 +117,14 @@ test("every public page offers Contact and FAQ under Support", async () => {
   });
 });
 
-test("game account deletion provides request paths for current and future games", async () => {
+test("game account deletion uses a dedicated form for current and future games", async () => {
   const page = await readFile(new URL("../delete-account.html", import.meta.url), "utf8");
   assert.match(page, /rel="canonical" href="https:\/\/broadwaypixels\.com\/delete-account"/);
-  for (const topic of ["Kitty Match Mania account deletion", "Doggy Match Mania account deletion", "Game account deletion"]) {
-    assert.ok(page.includes(`href="/support?project=Projects&amp;topic=${encodeURIComponent(topic)}#support-form"`));
+  assert.match(page, /<form[^>]+action="\/api\/deletion-requests"/);
+  for (const game of ["Kitty Match Mania", "Doggy Match Mania", "Other game"]) {
+    assert.ok(page.includes(`>${game}</option>`));
   }
+  assert.doesNotMatch(page, /\/support\?project=|What happens next|Broadway Pixels Games/);
   const referringPages = ["support.html", "match-mania-privacy.html"];
   for (const file of referringPages) {
     const referringPage = await readFile(new URL(`../${file}`, import.meta.url), "utf8");

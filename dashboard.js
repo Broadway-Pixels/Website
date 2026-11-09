@@ -6,6 +6,7 @@ const dashboardStatus = document.querySelector("#dashboard-status");
 const logoutButton = document.querySelector("#dashboard-logout");
 const rangeButtons = document.querySelectorAll("[data-days]");
 const ticketViewButtons = document.querySelectorAll("[data-ticket-view]");
+const deletionProject = "Deletion Requests";
 let selectedDays = 30;
 let selectedTicketView = "open";
 let dashboardTickets = [];
@@ -121,13 +122,23 @@ async function ticketAction(ticketId, action, options = {}) {
 function renderTickets() {
   const target = document.querySelector("#ticket-list");
   const count = document.querySelector("#ticket-count");
-  const openTickets = dashboardTickets.filter((ticket) => ticket.status !== "archived");
-  const archivedTickets = dashboardTickets.filter((ticket) => ticket.status === "archived");
-  const tickets = selectedTicketView === "archived" ? archivedTickets : openTickets;
+  const contactTickets = dashboardTickets.filter((ticket) => ticket.project !== deletionProject);
+  const openTickets = contactTickets.filter((ticket) => ticket.status !== "archived");
+  const archivedTickets = contactTickets.filter((ticket) => ticket.status === "archived");
+  const deletionTickets = dashboardTickets.filter((ticket) => ticket.project === deletionProject);
+  const views = {
+    open: { tickets: openTickets, emptyMessage: "No open support tickets." },
+    archived: { tickets: archivedTickets, emptyMessage: "No archived tickets." },
+    deletion: { tickets: deletionTickets, emptyMessage: "No account deletion requests." },
+  };
+  const { tickets, emptyMessage } = views[selectedTicketView];
   target.replaceChildren();
-  count.textContent = `${formatNumber(openTickets.length)} open`;
+  count.textContent = selectedTicketView === "deletion"
+    ? `${formatNumber(deletionTickets.length)} total`
+    : `${formatNumber(openTickets.length)} open`;
   document.querySelector("#open-ticket-count").textContent = formatNumber(openTickets.length);
   document.querySelector("#archived-ticket-count").textContent = formatNumber(archivedTickets.length);
+  document.querySelector("#deletion-ticket-count").textContent = formatNumber(deletionTickets.length);
   ticketViewButtons.forEach((button) => {
     const active = button.dataset.ticketView === selectedTicketView;
     button.classList.toggle("active", active);
@@ -137,7 +148,7 @@ function renderTickets() {
   if (!tickets.length) {
     const empty = document.createElement("p");
     empty.className = "dashboard-empty";
-    empty.textContent = selectedTicketView === "archived" ? "No archived tickets." : "No open support tickets.";
+    empty.textContent = emptyMessage;
     target.append(empty);
     return;
   }
@@ -155,7 +166,9 @@ function renderTickets() {
     ticketId.textContent = ticket.ticketId;
     const meta = document.createElement("p");
     meta.className = "ticket-card-meta";
-    meta.textContent = `${ticket.project} | ${ticket.name} | ${ticket.email}`;
+    const status = ticket.status === "archived" ? "Archived" : "Open";
+    const category = ticket.project === deletionProject ? `${ticket.project} (${status})` : ticket.project;
+    meta.textContent = `${category} | ${ticket.name} | ${ticket.email}`;
     identity.append(ticketId, meta);
     const time = document.createElement("time");
     time.dateTime = ticket.createdAt;

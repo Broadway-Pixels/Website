@@ -13,9 +13,9 @@
     <link rel="shortcut icon" href="/favicon.ico?v=20260902-1" />
     <link rel="apple-touch-icon" href="/assets/broadway-pixels-favicon.png?v=20260722-2" />
     <script src="/theme.js?v=20260722-2"></script>
-    <link rel="stylesheet" href="/styles.css?v=20261109-5" />
+    <link rel="stylesheet" href="/styles.css?v=20261109-deletion-ack" />
     <script src="/script.js?v=20260724-1" defer></script>
-    <script src="/delete-account.js" defer></script>
+    <script src="/delete-account.js?v=20261109-deletion-ack" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -72,8 +72,12 @@
             <label for="deletion-website">Website</label>
             <input id="deletion-website" name="website" type="text" tabindex="-1" autocomplete="off" />
           </div>
+          <label class="deletion-acknowledgment" for="deletion-acknowledged">
+            <input id="deletion-acknowledged" name="acknowledged" type="checkbox" autocomplete="off" required />
+            <span>I understand that deleting my account is permanent and all data associated with it will be lost.</span>
+          </label>
           <div class="support-submit-row">
-            <button class="button button-primary" type="submit" disabled>Send request</button>
+            <button class="button button-primary" type="submit" disabled>Submit</button>
           </div>
           <p id="deletion-status" class="form-status" role="status"></p>
           <noscript><p>Enable JavaScript to send your deletion request.</p></noscript>

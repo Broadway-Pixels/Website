@@ -317,6 +317,8 @@
   .form-field input:hover, .form-field select:hover, .form-field textarea:hover { border-color: var(--blue); }
   .form-field input:focus, .form-field select:focus, .form-field textarea:focus { outline: 0; border-color: var(--blue); background: white; box-shadow: 0 0 0 3px rgb(255 201 74 / .8); }
   .form-field small { color: #465a81; font-size: 0.86rem; }
+  .deletion-acknowledgment { display: grid; grid-template-columns: 20px minmax(0, 1fr); align-items: start; gap: 10px; padding-block: 4px; cursor: pointer; }
+  .deletion-acknowledgment input { inline-size: 20px; block-size: 20px; margin: .15em 0 0; }
   .honeypot { position: absolute; overflow: hidden; width: 1px; height: 1px; clip-path: inset(50%); white-space: nowrap; }
   .support-submit-row { display: flex; align-items: center; gap: 22px; }
   .support-submit-row p { color: var(--muted); font-size: 0.9rem; }

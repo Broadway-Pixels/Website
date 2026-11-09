@@ -72,9 +72,15 @@ test("deletion requests create a dedicated ticket and notification", async (t) =
     game: "Kitty Match Mania",
     requestId: "example-request-id",
     project: "General",
+    acknowledged: true,
   };
   assert.equal((await submit({ ...input, game: "" })).status, 422);
-  assert.deepEqual(await (await submit({ ...input, website: "spam" })).json(), { message: "Request received." });
+  assert.deepEqual(await (await submit({ ...input, website: "spam", acknowledged: false })).json(), { message: "Request received." });
+  for (const acknowledged of [undefined, false, "true"]) {
+    const response = await submit({ ...input, acknowledged });
+    assert.equal(response.status, 422);
+    assert.equal((await response.json()).message, "Confirm that account deletion is permanent. Refresh the page if the checkbox is missing.");
+  }
   assert.equal(tickets.length, 0);
   assert.equal(emails.length, 0);
 

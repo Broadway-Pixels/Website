@@ -37,6 +37,7 @@ deletionForm.addEventListener("submit", async (event) => {
     email: fields.get("email").trim(),
     game: fields.get(gameField).trim(),
     details: fields.get("details").trim(),
+    acknowledged: fields.has("acknowledged"),
     website: fields.get("website"),
     requestId: deletionRequestId,
   };

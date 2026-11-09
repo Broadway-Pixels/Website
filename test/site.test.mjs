@@ -121,6 +121,9 @@ test("game account deletion uses a dedicated form for current and future games",
   const page = await readFile(new URL("../delete-account.html", import.meta.url), "utf8");
   assert.match(page, /rel="canonical" href="https:\/\/broadwaypixels\.com\/delete-account"/);
   assert.match(page, /<form[^>]+action="\/api\/deletion-requests"/);
+  assert.match(page, /<label[^>]+for="deletion-acknowledged">\s*<input[^>]+id="deletion-acknowledged"[^>]+name="acknowledged"[^>]+type="checkbox"[^>]+required/);
+  assert.match(page, /I understand that deleting my account is permanent and all data associated with it will be lost\./);
+  assert.match(page, /<button[^>]+type="submit"[^>]*>Submit<\/button>/);
   for (const game of ["Kitty Match Mania", "Doggy Match Mania", "Other game"]) {
     assert.ok(page.includes(`>${game}</option>`));
   }

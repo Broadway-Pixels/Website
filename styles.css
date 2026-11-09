@@ -499,6 +499,8 @@
 
   @media (width <= 640px) {
     h1 { font-size: clamp(3rem, 15vw, 4.75rem); }
+    .creator-hero .hero-copy { text-align: center; }
+    .creator-hero .hero-copy > p { margin-inline: auto; }
     .music-page-hero h1 { font-size: clamp(2.1rem, 10.5vw, 2.6rem); }
     .content-page .content-hero h1 { max-width: none; font-size: clamp(2rem, 10vw, 2.4rem); white-space: nowrap; }
     .hero-actions { align-items: flex-start; flex-direction: column; }

@@ -132,8 +132,9 @@
   .artist-hero-art { aspect-ratio: 4 / 3; }
   .artist-hero-art img { object-position: 63% center; }
   .creator-hero { min-height: min(650px, calc(100dvh - 72px)); }
-  .creator-hero .hero-actions { display: block; text-align: center; }
-  .home-page .hero-copy > p { max-width: 32ch; }
+  .creator-hero .hero-copy { text-align: center; }
+  .creator-hero .hero-copy > p { max-width: 32ch; margin-inline: auto; }
+  .creator-hero .hero-actions { display: block; }
   .home-page .about-section { padding-block: clamp(68px, 8vw, 108px); }
 
   .section { width: var(--container); margin-inline: auto; padding-block: clamp(80px, 10vw, 140px); }
@@ -499,8 +500,6 @@
 
   @media (width <= 640px) {
     h1 { font-size: clamp(3rem, 15vw, 4.75rem); }
-    .creator-hero .hero-copy { text-align: center; }
-    .creator-hero .hero-copy > p { margin-inline: auto; }
     .music-page-hero h1 { font-size: clamp(2.1rem, 10.5vw, 2.6rem); }
     .content-page .content-hero h1 { max-width: none; font-size: clamp(2rem, 10vw, 2.4rem); white-space: nowrap; }
     .hero-actions { align-items: flex-start; flex-direction: column; }

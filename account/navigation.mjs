@@ -10,7 +10,7 @@ onAuthStateChanged(auth,user=>{
  for(const link of document.querySelectorAll('a[data-account-link]')) {
   link.replaceChildren();
   if(user){const image=document.createElement('img');image.src=new URL(avatarUrl(avatarId(user.photoURL))).pathname;image.alt='';image.width=32;image.height=32;link.append(image);}
-  link.append(document.createTextNode('Account'));
-  link.setAttribute('aria-label',user?`Your account, ${user.displayName || 'Aquarium Keeper'}`:'Account');
+  link.append(document.createTextNode('My Account'));
+  link.setAttribute('aria-label',user?`My Account, ${user.displayName || 'Aquarium Keeper'}`:'My Account');
  }
 });

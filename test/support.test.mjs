@@ -60,7 +60,7 @@ test("sends the support notification and branded confirmation with the ticket nu
     {
       RESEND_API_KEY: "re_test",
       SUPPORT_FROM_EMAIL: "Broadway Pixels Support <support@mail.broadwaypixels.com>",
-      SUPPORT_TO_EMAIL: "Media@BroadwayPixels.com",
+      SUPPORT_TO_EMAIL: "Support@BroadwayPixels.com",
     },
     fetchMock,
   );
@@ -74,12 +74,12 @@ test("sends the support notification and branded confirmation with the ticket nu
   const notification = JSON.parse(requests[0].options.body);
   const confirmation = JSON.parse(requests[1].options.body);
   assert.equal(notification.reply_to, validSubmission.email);
-  assert.equal(notification.to[0], "Media@BroadwayPixels.com");
+  assert.equal(notification.to[0], "Support@BroadwayPixels.com");
   assert.match(notification.subject, /B4829173056/);
   assert.match(notification.html, /&lt;script&gt;/);
   assert.doesNotMatch(notification.html, /<script>/);
   assert.equal(confirmation.to[0], validSubmission.email);
-  assert.equal(confirmation.reply_to, "Media@BroadwayPixels.com");
+  assert.equal(confirmation.reply_to, "Support@BroadwayPixels.com");
   assert.match(confirmation.subject, /B4829173056/);
   assert.match(confirmation.html, /broadway-pixels-logo-v2\.png/);
   assert.doesNotMatch(confirmation.html, /border-radius:50%/);
@@ -123,7 +123,7 @@ test("validates and sends a branded dashboard reply", async () => {
   }, validation.reply, {
     RESEND_API_KEY: "re_test",
     SUPPORT_FROM_EMAIL: "Broadway Pixels Support <support@mail.broadwaypixels.com>",
-    SUPPORT_TO_EMAIL: "Media@BroadwayPixels.com",
+    SUPPORT_TO_EMAIL: "Support@BroadwayPixels.com",
   }, async (url, options) => {
     requests.push({ url, options });
     return { ok: true, json: async () => ({ id: "email_reply" }) };
@@ -135,7 +135,7 @@ test("validates and sends a branded dashboard reply", async () => {
   assert.equal(requests[0].options.headers["Idempotency-Key"], `support-reply-B4829173056-${validSubmission.requestId}`);
   const payload = JSON.parse(requests[0].options.body);
   assert.equal(payload.to[0], validSubmission.email);
-  assert.equal(payload.reply_to, "Media@BroadwayPixels.com");
+  assert.equal(payload.reply_to, "Support@BroadwayPixels.com");
   assert.match(payload.subject, /^\[B4829173056\] Re:/);
   assert.match(payload.html, /A reply from Broadway Pixels/);
   assert.match(payload.html, /broadway-pixels-logo-v2\.png/);

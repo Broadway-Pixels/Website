@@ -82,4 +82,4 @@ Latest Reels reads the public Broadway Pixels YouTube Shorts feed through `/api/
 
 The API key must only exist on the server. Never add the real key to `support.js`, HTML, Git, or Squarespace code injection. If the frontend remains on Squarespace, deploy `/api/support` separately and change the form fetch URL in `support.js` to that HTTPS endpoint.
 
-The contact email is `Media@BroadwayPixels.com`. Before launch, confirm project status language, final domain DNS, analytics, privacy copy, and social preview image.
+The contact email is `Support@BroadwayPixels.com`. Before launch, confirm project status language, final domain DNS, analytics, privacy copy, and social preview image.

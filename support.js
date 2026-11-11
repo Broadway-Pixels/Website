@@ -52,8 +52,8 @@ supportForm?.addEventListener("submit", async (event) => {
   } catch (error) {
     supportStatus.className = "form-status form-status-error";
     const emailLink = document.createElement("a");
-    emailLink.href = "mailto:Media@BroadwayPixels.com";
-    emailLink.textContent = "Media@BroadwayPixels.com";
+    emailLink.href = "mailto:Support@BroadwayPixels.com";
+    emailLink.textContent = "Support@BroadwayPixels.com";
     supportStatus.replaceChildren("The web form is unavailable right now. Please email ", emailLink, ".");
     console.error(error);
   } finally {

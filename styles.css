@@ -25,6 +25,7 @@
     --yellow: #ffc94a;
     --radius: 12px;
     --container: min(1240px, calc(100% - 40px));
+    --page-intro-top: 48px;
     accent-color: var(--blue);
   }
 
@@ -130,7 +131,11 @@
   .hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 60% center; }
   .artist-hero-art { aspect-ratio: 4 / 3; }
   .artist-hero-art img { object-position: 63% center; }
-  .creator-hero { min-height: min(650px, calc(100dvh - 72px)); }
+  .creator-hero {
+    min-height: min(650px, calc(100dvh - 72px));
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.19fr);
+    column-gap: clamp(48px, 6vw, 88px);
+  }
   .home-page .hero-copy > p { max-width: 32ch; }
   .home-page .about-section { padding-block: clamp(68px, 8vw, 108px); }
 
@@ -138,7 +143,7 @@
   .section-heading { max-width: 760px; margin-bottom: 48px; }
   .section-heading p { max-width: 52ch; margin-top: 18px; color: var(--muted); font-size: 1.1rem; }
   .music-page-hero { width: var(--container); margin-inline: auto; padding-block: clamp(70px, 10vw, 130px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 0.72fr); align-items: center; gap: clamp(48px, 9vw, 130px); border-bottom: 1px solid var(--line); }
-  .music-page-hero h1 { font-size: clamp(2.1rem, 5vw, 5rem); white-space: nowrap; }
+  .music-page-hero h1 { text-align: center; }
   .platform-actions { display: flex; flex-wrap: wrap; gap: 12px; }
   .music-page-hero .platform-actions { justify-content: center; margin-top: 30px; }
   .platform-actions .button-secondary { margin-top: 0; }
@@ -211,8 +216,8 @@
   .site-footer .social-icon:hover img { filter: brightness(0) invert(1); }
   .copyright { grid-column: 1 / -1; font-size: 0.9rem; }
 
-  .projects-hero { width: var(--container); margin-inline: auto; padding-block: clamp(64px, 8vw, 108px) 56px; border-bottom: 1px solid var(--line); }
-  .projects-hero h1 { max-width: 10ch; font-size: clamp(3.3rem, 6vw, 5.8rem); }
+  .projects-hero { width: var(--container); margin-inline: auto; padding-block-end: 56px; border-bottom: 1px solid var(--line); }
+  .projects-hero h1 { max-width: 10ch; }
   .projects-hero > p:last-child { max-width: 48ch; margin-top: 22px; color: var(--muted); font-size: 1.18rem; }
   .project-showcase { width: var(--container); margin-inline: auto; padding-block: 24px clamp(90px, 11vw, 150px); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   .project-preview { overflow: hidden; display: grid; grid-template-rows: auto 1fr; background: var(--sky); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; }
@@ -288,8 +293,8 @@
   .short-card > div { align-self: end; padding: clamp(22px, 3vw, 34px); }
   .short-card span { color: var(--blue); font-size: .88rem; font-weight: 800; }
   .short-card h3 { margin-top: 8px; }
-  .content-page .content-hero { padding-block: clamp(64px, 8vw, 108px) 56px; }
-  .content-page .content-hero h1 { max-width: none; font-size: clamp(3.3rem, 6vw, 5.8rem); white-space: nowrap; }
+  .content-page .content-hero { padding-block-end: 56px; }
+  .content-page .content-hero h1 { max-width: none; white-space: nowrap; }
   .content-page .video-release-section, .content-page .shorts-section { padding-block: clamp(64px, 8vw, 104px); }
 
   .support-hero { width: var(--container); margin-inline: auto; padding-block: clamp(54px, 8vw, 96px); display: grid; grid-template-columns: minmax(0, 0.78fr) minmax(440px, 1.22fr); align-items: center; gap: clamp(44px, 8vw, 110px); }
@@ -338,8 +343,8 @@
   .support-email-block p { color: #eaf2ff; }
   .support-email-block a { display: inline-block; margin-top: 5px; color: white; font-weight: 850; overflow-wrap: anywhere; text-underline-offset: 4px; }
 
-  .faq-page-hero { width: var(--container); margin-inline: auto; padding-block: clamp(74px, 10vw, 132px) clamp(54px, 7vw, 84px); border-bottom: 1px solid var(--line); }
-  .faq-page-hero h1 { max-width: 11ch; font-size: clamp(3.5rem, 7vw, 7rem); }
+  .faq-page-hero { width: var(--container); margin-inline: auto; padding-block-end: clamp(54px, 7vw, 84px); border-bottom: 1px solid var(--line); }
+  .faq-page-hero h1 { max-width: 11ch; }
   .faq-page-hero p { max-width: 44ch; margin-top: 24px; color: var(--muted); font-size: clamp(1.08rem, 1.8vw, 1.3rem); }
   .faq-page-list { width: min(880px, calc(100% - 40px)); margin-inline: auto; padding-block: clamp(56px, 8vw, 100px); border-top: 1px solid var(--line); }
   .faq-item { border-bottom: 1px solid var(--line); }
@@ -453,9 +458,24 @@
 
 @layer utilities {
   .reveal { opacity: 1; }
+  .label-intro,
+  .content-page .content-hero,
+  .projects-hero,
+  .faq-page-hero { padding-block-start: var(--page-intro-top); }
+
+  @media (width <= 700px) {
+    :root { --page-intro-top: 36px; }
+  }
+
   .home-page .creator-hero h1,
-  .home-page .about-copy h2 {
-    font-size: clamp(2.2rem, 3.8vw, 3.6rem);
+  .home-page .about-copy h2,
+  .music-page-hero h1,
+  .projects-hero h1,
+  .content-page .content-hero h1,
+  .label-intro h1,
+  .faq-page-hero h1,
+  .faq-page .contact-section h2 {
+    font-size: clamp(3rem, 5.2vw, 4.5rem);
     font-weight: 700;
   }
   #deletion-title { font-size: clamp(1.5rem, 7vw, 4rem); white-space: nowrap; }
@@ -476,11 +496,14 @@
     .nav-submenu::before { display: none; }
     .nav-group:not([open]) .nav-submenu { display: none; }
     .hero { min-height: auto; grid-template-columns: 1fr; gap: 36px; padding-block: 54px; }
+    .creator-hero .hero-copy { text-align: center; }
+    .creator-hero .hero-copy > p { margin-inline: auto; }
+    .creator-hero .hero-actions { justify-content: center; }
     .hero-art { aspect-ratio: 1.35; }
     .about-section { grid-template-columns: 1fr; }
     .music-page-hero { grid-template-columns: 1fr; }
     .music-page-hero > div { min-width: 0; }
-    .latest-release-card { justify-self: center; }
+    .latest-release-card { justify-self: center; width: min(100%, 480px); }
     .song-copy { grid-template-columns: 1fr; gap: 2px; }
     .support-hero, .support-layout { grid-template-columns: 1fr; }
     .support-hero-art { aspect-ratio: 4 / 3; }
@@ -508,11 +531,9 @@
 
   @media (width <= 640px) {
     h1 { font-size: clamp(3rem, 15vw, 4.75rem); }
-    .music-page-hero h1 { font-size: clamp(2.1rem, 10.5vw, 2.6rem); }
-    .content-page .content-hero h1 { max-width: none; font-size: clamp(2rem, 10vw, 2.4rem); white-space: nowrap; }
+    /* Keep the single-line title inside the mobile container's 32px gutters. */
+    .content-page .content-hero h1 { font-size: min(3rem, calc((100vw - 32px) / 8.25)); }
     .hero-actions { align-items: flex-start; flex-direction: column; }
-    .creator-hero .hero-copy { text-align: center; }
-    .creator-hero .hero-copy > p { margin-inline: auto; }
     .creator-hero .hero-actions { align-items: center; }
     .hero-art { aspect-ratio: 1; }
     .brand-image img { block-size: 38px; }

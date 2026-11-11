@@ -7,7 +7,7 @@ const output = new URL("../dist/", import.meta.url);
 const files = [
   "label.html", "label.css",
   "index.html", "music.html", "projects.html", "support.html", "faq.html", "dashboard.html",
-  "privacy.html", "delete-account.html", "delete-account.js", "fishadise.html", "fishadise.css", "styles.css", "script.js", "theme.js", "support.js", "dashboard.js", "favicon.ico", "app-ads.txt",
+  "privacy.html", "delete-account.html", "delete-account.js", "fishadise.html", "fishadise.css", "styles.css", "script.js", "reels.js", "theme.js", "support.js", "dashboard.js", "favicon.ico", "app-ads.txt",
 ];
 
 await rm(output, { recursive: true, force: true });

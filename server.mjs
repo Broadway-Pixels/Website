@@ -13,6 +13,7 @@ import {
   verifyDashboardSession,
 } from "./lib/dashboard-auth.mjs";
 import { resolvePublicRequest } from "./lib/routes.mjs";
+import { handleReels } from "./lib/reels.mjs";
 import { isAllowedOrigin, sendSupportEmails, sendTicketReply, validateDeletionRequest, validateSupportSubmission, validateTicketReply } from "./lib/support.mjs";
 import { createTicketId, TicketStore } from "./lib/tickets.mjs";
 
@@ -46,6 +47,7 @@ publicFiles.add("/label.css");
 publicFiles.add("/match-mania-privacy.html");
 publicFiles.add("/delete-account.html");
 publicFiles.add("/delete-account.js");
+publicFiles.add("/reels.js");
 publicFiles.add("/app-ads.txt");
 
 function json(response, status, body, headers = {}) {
@@ -263,6 +265,16 @@ function handleDashboardSession(request, response) {
 
 createServer(async (request, response) => {
   const url = new URL(request.url, `http://${request.headers.host || "localhost"}`);
+  if (url.pathname === "/api/reels" || url.pathname.startsWith("/api/reels/")) {
+    try {
+      const result = await handleReels(new Request(url, { method: request.method }));
+      const bytes = Buffer.from(await result.arrayBuffer());
+      response.writeHead(result.status, Object.fromEntries(result.headers));
+      return response.end(bytes);
+    } catch {
+      return json(response, 503, { message: "Reels are temporarily unavailable." });
+    }
+  }
   const ticketAction = url.pathname.match(/^\/api\/dashboard\/tickets\/(B\d{10})(?:\/(reply|archive|unarchive))?$/);
   if (ticketAction) return handleDashboardTicketAction(request, response, ticketAction[1], ticketAction[2] || "delete");
   if (url.pathname === "/api/support") return handleSupport(request, response);

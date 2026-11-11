@@ -14,7 +14,7 @@ Then open `http://localhost:8080`.
 
 - `/`: focused studio introduction and latest work
 - `/music`: year-grouped releases with direct Spotify and verified SoundCloud links
-- `/videos`: YouTube video releases, Shorts, Reels, and TikToks
+- `/videos`: featured videos and the three newest Broadway Pixels YouTube Shorts; links to Instagram Reels and TikTok
 - `/projects`: apps, games, and software projects
 - `/support`: single form for project support, collaborations, press, and general questions
 - `/dashboard`: private dashboard for replying to, archiving, restoring, and deleting support tickets plus page views, sessions, sources, devices, and recent activity
@@ -60,6 +60,8 @@ npm run cf:dev
 Production configuration lives in `wrangler.jsonc`. Store `RESEND_API_KEY`, `DASHBOARD_USERNAME`, `DASHBOARD_PASSWORD`, and `DASHBOARD_SESSION_SECRET` with `wrangler secret`; never place their real values in the repository. Apply migrations with `npm run cf:migrate:remote`, then deploy with `npm run cf:deploy`.
 
 The legacy Node/Nginx files remain temporarily for rollback while the Cloudflare deployment is proven. They are no longer the intended production hosting path after cutover.
+
+Latest Reels reads the public Broadway Pixels YouTube Shorts feed through `/api/reels`. The Worker caches the feed and serves thumbnails through the same origin; no social account credentials or extra Cloudflare resources are required. The Videos page keeps its bundled cards if the feed cannot load. Instagram- or TikTok-only uploads do not appear in this feed.
 
 ## Theme and analytics
 

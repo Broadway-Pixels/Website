@@ -10,6 +10,7 @@ import {
 import { isAllowedOrigin, sendSupportEmails, sendTicketReply, validateDeletionRequest, validateSupportSubmission, validateTicketReply } from "../lib/support.mjs";
 import { D1Store, validatePageView } from "./store.mjs";
 import { handleFleeterbaseVerification } from "../lib/fleeterbase-email.mjs";
+import { handleReels } from "../lib/reels.mjs";
 
 const ticketIdPattern = /^B\d{10}$/;
 const apiHeaders = {
@@ -204,9 +205,15 @@ async function handleTicketAction(request, env, store, ticketId, action) {
   }
 }
 
-async function handleRequest(request, env) {
+async function handleRequest(request, env, ctx) {
   const url = new URL(request.url);
   if (url.pathname === "/api/internal/fleeterbase-verification") return handleFleeterbaseVerification(request, env);
+  if (url.pathname === "/api/reels" || url.pathname.startsWith("/api/reels/")) {
+    return handleReels(request, {
+      cache: globalThis.caches?.default,
+      waitUntil: ctx ? (promise) => ctx.waitUntil(promise) : undefined,
+    });
+  }
   const store = new D1Store(env.DB);
   const ticketAction = url.pathname.match(/^\/api\/dashboard\/tickets\/(B\d{10})(?:\/(reply|archive|unarchive))?$/);
   if (ticketAction) return handleTicketAction(request, env, store, ticketAction[1], ticketAction[2] || "delete");
@@ -229,8 +236,8 @@ async function handleRequest(request, env) {
 }
 
 export default {
-  fetch(request, env) {
-    return handleRequest(request, env);
+  fetch(request, env, ctx) {
+    return handleRequest(request, env, ctx);
   },
   scheduled(_controller, env, ctx) {
     ctx.waitUntil(new D1Store(env.DB).cleanupRateLimits());

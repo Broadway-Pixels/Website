@@ -37,7 +37,7 @@ const mimeTypes = {
   ".ttf": "font/ttf",
   ".txt": "text/plain; charset=utf-8",
 };
-const publicFiles = new Set(["/index.html", "/music.html", "/content.html", "/projects.html", "/support.html", "/faq.html", "/dashboard.html", "/privacy.html", "/tanktopia-eula.html", "/steady-privacy.html", "/steady-terms.html", "/styles.css", "/script.js", "/theme.js", "/support.js", "/dashboard.js", "/favicon.ico"]);
+const publicFiles = new Set(["/account-navigation.css", "/account-navigation.js", "/account-privacy.html", "/account.html", "/account.css", "/account.js","/index.html", "/music.html", "/content.html", "/projects.html", "/support.html", "/faq.html", "/dashboard.html", "/privacy.html", "/tanktopia-eula.html", "/steady-privacy.html", "/steady-terms.html", "/styles.css", "/script.js", "/theme.js", "/support.js", "/dashboard.js", "/favicon.ico"]);
 
 publicFiles.add("/tanktopia-privacy.html");
 publicFiles.add("/fishadise.html");
@@ -294,7 +294,7 @@ createServer(async (request, response) => {
   }
 
   const requested = route.file;
-  if (!publicFiles.has(requested) && !requested.startsWith("/assets/")) {
+  if (!publicFiles.has(requested) && !requested.startsWith("/assets/") && !/^\/account\/avatars\/(goldfish|clownfish|rainbow|betta|blue-tang|guppy)\.png$/.test(requested)) {
     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
     return response.end("Not found");
   }
@@ -306,7 +306,7 @@ createServer(async (request, response) => {
 
   const responseHeaders = {
     "Content-Type": mimeTypes[extname(filePath)] || "application/octet-stream",
-    "Content-Security-Policy": "default-src 'self'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self' https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",

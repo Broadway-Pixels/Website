@@ -9,3 +9,9 @@ visual-check.mjs
 data/
 dist/
 node_modules/
+/dist-accounts/
+/account.js
+/firebase-debug.log
+/firestore-debug.log
+
+/account-navigation.js

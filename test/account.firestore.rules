@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /players/{playerId}/saves/main {
+      function ownsSave() {
+        return request.auth != null && request.auth.uid == playerId;
+      }
+      allow read, delete: if ownsSave();
+      allow create, update: if ownsSave()
+        && request.resource.data.keys().hasOnly(['format', 'revision', 'payload', 'savedAt'])
+        && request.resource.data.format == 1
+        && request.resource.data.revision is string
+        && request.resource.data.revision.matches('^[a-f0-9]{32}$')
+        && request.resource.data.payload is string
+        && request.resource.data.payload.size() > 0
+        && request.resource.data.payload.size() <= 800000
+        && request.resource.data.savedAt == request.time;
+    }
+  }
+}

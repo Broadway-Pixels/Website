@@ -93,4 +93,10 @@ test("deletion requests create a dedicated ticket and notification", async (t) =
   assert.match(emails[0].subject, /\[Deletion Requests\] Kitty Match Mania/);
   assert.equal(emails[0].key, "support-admin-deletion-example-request-id");
   assert.match(emails[1].text, /received your deletion request/);
+  const websiteResponse = await submit({ ...input, game: "Website", website: "", requestId: "example-website-request-id" });
+  assert.equal(websiteResponse.status, 200);
+  assert.equal(tickets[1][3], "Deletion Requests");
+  assert.equal(tickets[1][4], "Website");
+  assert.match(emails[2].subject, /\[Deletion Requests\] Website/);
+  assert.match(emails[3].text, /Game or website: Website/);
 });

@@ -46,6 +46,44 @@ test("every public page links to the Broadway Pixels Discord", async () => {
   });
 });
 
+test("projects intro keeps its title without the removed subtitle", async () => {
+  const projects = await readFile(new URL("../projects.html", import.meta.url), "utf8");
+  const intro = projects.match(/<header class="projects-hero reveal">([\s\S]*?)<\/header>/)?.[1];
+  assert.ok(intro);
+  assert.match(projects, /<body class="projects-page">/);
+  assert.match(intro, /<h1>My Projects<\/h1>/);
+  assert.doesNotMatch(intro, /<p\b|Apps, games, and software I’ve been working on\./);
+});
+
+test("Videos and Projects use the compact Label intro spacing", async () => {
+  const css = await readFile(new URL("../styles.css", import.meta.url), "utf8");
+  assert.match(css, /--page-intro-bottom: 32px;/);
+  assert.match(css, /@media \(width <= 700px\)\s*{\s*:root\s*{[^}]*--page-intro-bottom: 24px;/);
+  for (const selector of [".projects-page .projects-hero", ".content-page .content-hero"]) {
+    const rule = css.slice(css.indexOf(`${selector} {`)).split("}")[0];
+    assert.match(rule, /padding-block-end: var\(--page-intro-bottom\)/);
+  }
+  assert.match(css, /\.projects-hero\s*{[^}]*padding-block-end: 56px;/);
+  assert.match(css, /\.content-hero div > p:last-child\s*{[^}]*margin-top: 16px;/);
+  assert.match(css, /\.content-page \.video-release-section, \.content-page \.shorts-section\s*{[^}]*padding-block: var\(--page-intro-bottom\) clamp\(64px, 8vw, 104px\)/);
+  const descriptionRule = css.match(/\.content-hero div > p:last-child\s*{([^}]*)}/)?.[1];
+  assert.doesNotMatch(descriptionRule, /max-width:/);
+});
+
+test("label roster includes Social Impaired using approved artwork and its artist website", async () => {
+  const page = await readFile(new URL("../label.html", import.meta.url), "utf8");
+  const card = page.match(/<article class="label-artist" id="social-impaired">[\s\S]*?<\/article>/)?.[0] || "";
+  assert.match(card, /<h3>Social Impaired<\/h3>/);
+  assert.match(card, /href="https:\/\/socialimpaired\.com\/"/);
+  assert.match(card, /src="\/assets\/social-impaired-profile\.png"/);
+  assert.match(card, /Raw thoughts\. Real feelings\. Music for the ones who feel out of place\./);
+  assert.doesNotMatch(card, /shattered-revised-master|secret_token|Out now/i);
+  assert.equal((page.match(/class="label-artist"/g) || []).length, 4);
+  const image = await readFile(new URL("../assets/social-impaired-profile.png", import.meta.url));
+  assert.equal(image.readUInt32BE(16), 1254);
+  assert.equal(image.readUInt32BE(20), 1254);
+});
+
 test("projects page includes the Pixelated Discord bot", async () => {
   const projects = await readFile(new URL("../projects.html", import.meta.url), "utf8");
   assert.match(projects, /id="pixelated"/);
